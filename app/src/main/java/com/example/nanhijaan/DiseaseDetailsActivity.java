@@ -1,5 +1,6 @@
 package com.example.nanhijaan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -45,6 +46,42 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+        symptoms_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String heading = "Symptoms";
+                Intent i = new Intent(DiseaseDetailsActivity.this, SymptomsDetailsActivity.class);
+                i.putExtra("heading",heading);
+                startActivity(i);
+            }
+        });
+        prevention_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String heading = "Prevention";
+                Intent i = new Intent(DiseaseDetailsActivity.this, SymptomsDetailsActivity.class);
+                i.putExtra("heading",heading);
+                startActivity(i);
+            }
+        });
+        mgmt_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String heading = "Management";
+                Intent i = new Intent(DiseaseDetailsActivity.this, SymptomsDetailsActivity.class);
+                i.putExtra("heading",heading);
+                startActivity(i);
+            }
+        });
+        special_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String heading = "Special Needs";
+                Intent i = new Intent(DiseaseDetailsActivity.this, SymptomsDetailsActivity.class);
+                i.putExtra("heading",heading);
+                startActivity(i);
             }
         });
     }
