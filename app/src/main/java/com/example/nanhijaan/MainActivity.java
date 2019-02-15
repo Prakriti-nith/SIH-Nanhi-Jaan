@@ -1,9 +1,11 @@
 package com.example.nanhijaan;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
@@ -11,14 +13,22 @@ import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
+    FloatingActionButton fab;
+    CardView disease_cp_cv, disease_au_cv, disease_ds_cv, disease_cv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = findViewById(R.id.fab);
+        init();
+        setListener();
+
+        setSupportActionBar(toolbar);
+    }
+
+    private void setListener() {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -26,6 +36,51 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        disease_cp_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String disease_name = "Cerebral Palsy";
+                Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                i.putExtra("disease",disease_name);
+                startActivity(i);
+            }
+        });
+        disease_au_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String disease_name = "Cerebral Palsy";
+                Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                i.putExtra("disease",disease_name);
+                startActivity(i);
+            }
+        });
+        disease_ds_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String disease_name = "Cerebral Palsy";
+                Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                i.putExtra("disease",disease_name);
+                startActivity(i);
+            }
+        });
+        disease_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String disease_name = "Cerebral Palsy";
+                Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                i.putExtra("disease",disease_name);
+                startActivity(i);
+            }
+        });
+    }
+
+    private void init() {
+        toolbar = findViewById(R.id.toolbar);
+        fab = findViewById(R.id.fab);
+        disease_cp_cv = findViewById(R.id.diseasecv1);
+        disease_au_cv = findViewById(R.id.diseasecv2);
+        disease_ds_cv = findViewById(R.id.diseasecv3);
+        disease_cv = findViewById(R.id.diseasecv4);
     }
 
     @Override
