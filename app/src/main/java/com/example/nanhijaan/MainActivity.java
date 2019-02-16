@@ -137,9 +137,19 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.action_parent) {
+            Intent i = new Intent(MainActivity.this, ParentSuggestions.class);
+            startActivity(i);
         }
+        else if(id == R.id.action_language) {
+            Intent i = new Intent(MainActivity.this, LanguageActivity.class);
+            startActivity(i);
+        }
+        else if(id == R.id.action_contact) {
+            Intent i = new Intent(MainActivity.this, ContactUsActivity.class);
+            startActivity(i);
+        }
+
 
         return super.onOptionsItemSelected(item);
     }
