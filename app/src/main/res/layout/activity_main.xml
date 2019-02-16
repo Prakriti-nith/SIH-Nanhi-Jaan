@@ -70,143 +70,24 @@
         </android.support.v7.widget.CardView>
     </android.support.design.widget.AppBarLayout>
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/appbar"
-        android:layout_margin="5dp"
-        android:orientation="vertical"
-        android:weightSum="2">
-        <LinearLayout
-            android:orientation="horizontal"
+        android:background="#FCF7F7">
+
+        <RelativeLayout
+            android:id="@+id/cards_rl"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.85"
-            android:weightSum="2">
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/diseasecv1"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                card_view:cardBackgroundColor="#FDFDFD"
-                card_view:cardCornerRadius="5dp"
-                card_view:cardElevation="4dp"
-                android:layout_below="@id/appbar"
-                android:layout_margin="5dp"
-                card_view:cardUseCompatPadding="true"
-                xmlns:tools="http://schemas.android.com/tools">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginLeft="50dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cerebral Palsy"
-                    android:layout_marginTop="140dp"
-                    android:layout_marginLeft="40dp"
-                    android:fontFamily="sans-serif"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/diseasecv2"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                card_view:cardBackgroundColor="#FDFDFD"
-                card_view:cardCornerRadius="5dp"
-                card_view:cardElevation="4dp"
-                android:layout_below="@id/appbar"
-                android:layout_margin="5dp"
-                card_view:cardUseCompatPadding="true"
-                xmlns:tools="http://schemas.android.com/tools">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginLeft="50dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Autism"
-                    android:layout_marginTop="140dp"
-                    android:layout_marginLeft="61dp"
-                    android:fontFamily="sans-serif"/>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.85"
-            android:weightSum="2">
+        </RelativeLayout>
 
-            <android.support.v7.widget.CardView
-                android:id="@+id/diseasecv3"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                card_view:cardBackgroundColor="#FDFDFD"
-                card_view:cardCornerRadius="5dp"
-                card_view:cardElevation="4dp"
-                android:layout_below="@id/appbar"
-                android:layout_margin="5dp"
-                card_view:cardUseCompatPadding="true"
-                xmlns:tools="http://schemas.android.com/tools">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginLeft="50dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Down Syndrome"
-                    android:layout_marginTop="140dp"
-                    android:layout_marginLeft="35dp"
-                    android:fontFamily="sans-serif"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
-                android:id="@+id/diseasecv4"
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:card_view="http://schemas.android.com/apk/res-auto"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                card_view:cardBackgroundColor="#FDFDFD"
-                card_view:cardCornerRadius="5dp"
-                card_view:cardElevation="4dp"
-                android:layout_below="@id/appbar"
-                android:layout_margin="5dp"
-                card_view:cardUseCompatPadding="true"
-                xmlns:tools="http://schemas.android.com/tools">
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/ic_launcher"
-                    android:layout_marginTop="60dp"
-                    android:layout_marginLeft="50dp"/>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cerebral Palsy"
-                    android:layout_marginTop="140dp"
-                    android:layout_marginLeft="40dp"
-                    android:fontFamily="sans-serif"/>
-            </android.support.v7.widget.CardView>
-        </LinearLayout>
-
-    </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
