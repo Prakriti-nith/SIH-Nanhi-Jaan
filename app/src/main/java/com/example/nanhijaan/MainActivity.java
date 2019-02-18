@@ -1,6 +1,7 @@
 package com.example.nanhijaan;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -25,6 +26,14 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.File;
 import java.io.IOException;
@@ -39,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     String disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
+    String language;
 
     private static final String AUDIO_RECORDER_FILE_EXT_3GP = ".3gp";
     private static final String AUDIO_RECORDER_FILE_EXT_MP4 = ".mp3";
@@ -62,11 +72,16 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
         }
         init();
+        getLanguage();
+//        fetchDataFromServer();
         setListener();
 
         setSupportActionBar(toolbar);
+    }
 
-
+    private void getLanguage() {
+        language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, MainActivity.this);
+        Log.d("lang", "getLanguage: " + language);
     }
 
     private void init() {
@@ -78,6 +93,38 @@ public class MainActivity extends AppCompatActivity {
         num_diseases = 10; // Fetch from API disease number, disease names, and images;
         placeCards(num_diseases);
     }
+
+//    private void fetchDataFromServer() {
+//
+//        final ProgressDialog dialog = new ProgressDialog(this);
+//        dialog.setMessage("Loading...");
+//        dialog.show();
+//
+//        func();
+//
+//        StringRequest request =
+//                new StringRequest(Request.Method.GET, UrlHelper.SIHAPI_URL+ep,
+//                        new Response.Listener<String>() {
+//                            @Override
+//                            public void onResponse(String response) {
+//                                dialog.cancel();
+//                                parseShowsJSON(response);
+//                            }
+//                        },
+//                        new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//                                dialog.cancel();
+//                                Toast.makeText(MainActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+//                            }
+//                        });
+//        RequestQueue queue = Volley.newRequestQueue(this);
+//        queue.add(request);
+//    }
+//
+//    private void parseShowsJSON(String response) {
+//
+//    }
 
     private void placeCards(int num_diseases) {
         RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
