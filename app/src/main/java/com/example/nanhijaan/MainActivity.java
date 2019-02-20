@@ -15,6 +15,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -35,6 +36,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -43,10 +45,9 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton fab;
     RelativeLayout disease_rl;
     int num_diseases;
-    String disease_names;
+    Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
-    String recognized_speech;
     String language;
 
     public static final int RECORD_AUDIO = 0;
@@ -61,10 +62,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
 
+        init();
+        getLanguage();
+//        fetchDataFromServer();
+
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
-                Locale.getDefault());
+                language);
 
         mSpeechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -104,8 +109,9 @@ public class MainActivity extends AppCompatActivity {
                         .getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
 
                 //displaying the first match
-                if (matches != null)
-                    recognized_speech=matches.get(0);
+                if (matches != null) {
+                    search_for_disease(matches.get(0));
+                }
             }
 
             @Override
@@ -119,9 +125,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        init();
-        getLanguage();
-//        fetchDataFromServer();
         setListener();
 
         setSupportActionBar(toolbar);
@@ -173,6 +176,25 @@ public class MainActivity extends AppCompatActivity {
 //    private void parseShowsJSON(String response) {
 //
 //    }
+
+    private void search_for_disease(String input_text){
+        for(String s:disease_names){
+            if(input_text.contains(s)) {
+                if (input_text.contains(SYMPTOMS)) {
+
+                } else if (input_text.contains(MANAGEMENT)) {
+
+                } else if (input_text.contains(PREVENTION)) {
+
+                } else if (input_text.contains(SPECIAL NEEDS)) {
+
+                } else {
+
+                }
+                return;
+            }
+        }
+    }
 
     private void placeCards(int num_diseases) {
         RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
@@ -275,12 +297,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        disease_names=new Vector<>();
         for(int i=0; i<num_diseases; i++) {
             disease_cv[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     final String disease_name = "Cerebral Palsy"; // From API
+                    disease_names.add(disease_name);
                     Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
                     i.putExtra("disease",disease_name);
                     startActivity(i);
