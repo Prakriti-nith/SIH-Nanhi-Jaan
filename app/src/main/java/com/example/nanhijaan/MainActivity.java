@@ -61,9 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
 
-    TextToSpeech mTTS = null;
-    private final int ACT_CHECK_TTS_DATA = 1000;
-
+    private TTSService tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
         getLanguage();
         fetchDataFromServer();
 
+        tts = new TTSService(mContext, language);
+        
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
@@ -135,10 +135,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setSupportActionBar(toolbar);
-
-        Intent ttsIntent = new Intent();
-        ttsIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(ttsIntent, ACT_CHECK_TTS_DATA);
     }
 
     private void getLanguage() {
@@ -299,8 +295,11 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                StringBuilder diseases = new StringBuilder();
+                for(String dn:disease_names){
+                    diseases.append(dn + ". ");
+                }
+                tts.say(diseases.toString());
             }
         });
 
