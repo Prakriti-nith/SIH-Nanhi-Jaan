@@ -18,14 +18,14 @@ public class TTSService extends Activity implements TextToSpeech.OnInitListener 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.);
-        final EditText ettext = (EditText)findViewById(R.id.ettext);
-        final Button bsay = (Button)findViewById(R.id.bsay);
-        bsay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saySomething(ettext.getText().toString().trim(), 1);
-            }
-        });
+//        setContentView(R.layout.);
+//        final EditText ettext = (EditText)findViewById(R.id.ettext);
+//        final Button bsay = (Button)findViewById(R.id.bsay);
+//        bsay.setOnClickListener(new View.OnClickListener() {
+//            public void onClick(View v) {
+//                saySomething(ettext.getText().toString().trim(), 1);
+//            }
+//        });
 
         // Check to see if we have TTS voice data
         Intent ttsIntent = new Intent();

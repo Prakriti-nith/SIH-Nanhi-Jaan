@@ -39,11 +39,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.Locale;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -164,15 +161,30 @@ public class MainActivity extends AppCompatActivity {
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        StringRequest request =
+        final StringRequest request =
                 new StringRequest(Request.Method.GET, UrlHelper.SIHAPI_URL + language,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 Toast.makeText(MainActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+
+                                response= fixEncoding(response);
+
                                 parseDiseaseJSON(response);
                                 Log.d("1234", "onResponse: " + response);
                                 dialog.cancel();
+                            }
+
+                            private String fixEncoding(String response) {
+                                try {
+                                    byte[] u = response.toString().getBytes(
+                                            "ISO-8859-1");
+                                    response = new String(u, "UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                    return null;
+                                }
+                                return response;
                             }
                         },
                         new Response.ErrorListener() {

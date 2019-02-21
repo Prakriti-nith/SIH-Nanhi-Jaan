@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Vector;
 
 public class DiseaseDetailsActivity extends AppCompatActivity {
@@ -68,8 +69,21 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 Toast.makeText(DiseaseDetailsActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                response= fixEncoding(response);
                                 parseDiseaseDetailsJSON(response);
                                 dialog.cancel();
+                            }
+
+                            private String fixEncoding(String response) {
+                                try {
+                                    byte[] u = response.toString().getBytes(
+                                            "ISO-8859-1");
+                                    response = new String(u, "UTF-8");
+                                } catch (UnsupportedEncodingException e) {
+                                    e.printStackTrace();
+                                    return null;
+                                }
+                                return response;
                             }
                         },
                         new Response.ErrorListener() {
@@ -143,13 +157,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                 Intent i = new Intent(DiseaseDetailsActivity.this, SymptomsDetailsActivity.class);
                 if(title == "Symptoms") {
                     String[] symptoms_str = new String[symptoms.length()];
-                    try {
-                        for (int j = 0; j < symptoms.length(); j++)
-                            symptoms_str[j] = symptoms.getString(j);
-                    }
-                    catch(JSONException e) {
-                        Log.d("1234", "onClick: " + e);
-                    }
+                    convertJSONArrayToStringArray(symptoms, symptoms_str);
                     i.putExtra("content", symptoms_str);
                     i.putExtra("length", symptoms.length());
 
@@ -161,10 +169,52 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                     }
                 }
                 else if(title == "Prevention") {
+                    String[] preventions_str = new String[prevention.length()];
+                    convertJSONArrayToStringArray(prevention, preventions_str);
+                    i.putExtra("content", preventions_str);
+                    i.putExtra("length", prevention.length());
 
+                    if(language == "hindi") {
+                        heading = getString(R.string.hindi_prevention);
+                    }
+                    else if(language == "punjabi") {
+                        heading = getString(R.string.punjabi_prevention);
+                    }
+                }
+                else if(title == "Special Needs") {
+                    String[] special_str = new String[special_needs.length()];
+                    convertJSONArrayToStringArray(special_needs, special_str);
+                    i.putExtra("content", special_str);
+                    i.putExtra("length", special_needs.length());
+
+                    if(language == "hindi") {
+                        heading = getString(R.string.hindi_special);
+                    }
+                    else if(language == "punjabi") {
+                        heading = getString(R.string.punjabi_special);
+                    }
+                }
+                else {
+                    String[] food_str = new String[foods.length()];
+                    String[] mental_str = new String[mental_ex.length()];
+                    String[] physical_str = new String[physical_ex.length()];
+                    convertJSONArrayToStringArray(foods, food_str);
+                    convertJSONArrayToStringArray(mental_ex, mental_str);
+                    convertJSONArrayToStringArray(physical_ex, physical_str);
+                    String[] mgmt_str = (String[])ArrayUtils.addAll(first, second);
                 }
                 i.putExtra("heading", heading);
                 startActivity(i);
+            }
+
+            private void convertJSONArrayToStringArray(JSONArray JSONarray, String[] stringArray) {
+                try {
+                    for (int j = 0; j < JSONarray.length(); j++)
+                        stringArray[j] = JSONarray.getString(j);
+                }
+                catch(JSONException e) {
+                    Log.d("1234", "onClick: " + e);
+                }
             }
         });
     }
