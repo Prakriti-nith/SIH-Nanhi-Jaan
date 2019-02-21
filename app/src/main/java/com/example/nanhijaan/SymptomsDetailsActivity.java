@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class SymptomsDetailsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
+    String heading, content[], details = "";
     TextView heading_tv, content_tv;
 
     @Override
@@ -18,6 +19,16 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_symptoms_details);
         init();
+        Intent mIntent = getIntent();
+        heading = mIntent.getStringExtra("heading");
+        heading_tv.setText(heading);
+        int length = mIntent.getIntExtra("length", 0);
+        content = mIntent.getStringArrayExtra("content");
+
+        for(int i=0; i<length; i++) {
+            details = details + content[i] + "\n";
+        }
+        content_tv.setText(details);
     }
 
     private void init() {
