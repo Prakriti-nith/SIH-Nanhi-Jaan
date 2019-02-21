@@ -8,17 +8,15 @@ import java.util.Locale;
 public class TTSService implements TextToSpeech.OnInitListener {
     Context context;
     TextToSpeech tts;
-    Locale locale;
 
-    public TTSService(Context c, String language){
+    public TTSService(Context c){
         context = c;
         tts = new TextToSpeech(context, this);
-        locale = new Locale(language);
     }
 
     public void onInit(int initStatus) {
         if (initStatus == TextToSpeech.SUCCESS) {
-            tts.setLanguage(locale);
+            tts.setLanguage(Locale.getDefault());
         }
     }
 

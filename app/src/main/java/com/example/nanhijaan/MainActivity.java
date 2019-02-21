@@ -17,10 +17,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -41,6 +43,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Vector;
 
 public class MainActivity extends AppCompatActivity {
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
+    EditText search_et;
     String language;
     JSONObject object;
 
@@ -73,12 +77,11 @@ public class MainActivity extends AppCompatActivity {
         getLanguage();
         fetchDataFromServer();
 
-        tts = new TTSService(mContext, language);
+        tts = new TTSService(mContext);
         
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE,
-                language);
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
 
         mSpeechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -119,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //displaying the first match
                 if (matches != null) {
-//                    search_for_disease(matches.get(0));
+                    search_for_disease(matches.get(0));
                 }
             }
 
@@ -131,6 +134,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEvent(int i, Bundle bundle) {
 
+            }
+        });
+
+        search_et.setOnKeyListener(new View.OnKeyListener(){
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event){
+                if(keyCode == event.KEYCODE_ENTER){
+                    search_for_disease(search_et.getText().toString());
+                    return true;
+                }
+                return false;
             }
         });
 
@@ -147,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
+        search_et = findViewById(R.id.searchet);
     }
 
     private void fetchDataFromServer() {
@@ -218,24 +233,16 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    private void search_for_disease(String input_text){
-//        for(String s:disease_names){
-//            if(input_text.contains(s)) {
-//                if (input_text.contains(SYMPTOMS)) {
-//
-//                } else if (input_text.contains(MANAGEMENT)) {
-//
-//                } else if (input_text.contains(PREVENTION)) {
-//
-//                } else if (input_text.contains(SPECIAL NEEDS)) {
-//
-//                } else {
-//
-//                }
-//                return;
-//            }
-//        }
-//    }
+    private void search_for_disease(String input_text){
+        for(int i=0;i<disease_names.size();i++){
+            Log.d("speech or search tag","searched for "+disease_names.get(i));
+            if(input_text.contains(disease_names.get(i))) {
+                disease_cv[i].performClick();
+                return;
+            }
+        }
+        Toast.makeText(getApplicationContext(), "No search results found!", Toast.LENGTH_SHORT).show();
+    }
 
     private void placeCards(int num_diseases) {
         RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
