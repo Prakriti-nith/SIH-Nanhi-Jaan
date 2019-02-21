@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
+import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -54,6 +55,9 @@ public class MainActivity extends AppCompatActivity {
     final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
 
     final Intent mSpeechRecognizerIntent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+
+    TextToSpeech mTTS = null;
+    private final int ACT_CHECK_TTS_DATA = 1000;
 
 
     @Override
@@ -128,6 +132,10 @@ public class MainActivity extends AppCompatActivity {
         setListener();
 
         setSupportActionBar(toolbar);
+
+        Intent ttsIntent = new Intent();
+        ttsIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(ttsIntent, ACT_CHECK_TTS_DATA);
     }
 
     private void getLanguage() {
