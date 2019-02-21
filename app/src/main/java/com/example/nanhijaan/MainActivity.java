@@ -34,7 +34,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Vector;
 
@@ -44,11 +51,12 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     FloatingActionButton fab;
     RelativeLayout disease_rl;
-    int num_diseases;
+    int num_diseases, disease_IDs[];
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
     String language;
+    JSONObject object;
 
     public static final int RECORD_AUDIO = 0;
     final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -64,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         getLanguage();
-//        fetchDataFromServer();
+        fetchDataFromServer();
 
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
@@ -110,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
 
                 //displaying the first match
                 if (matches != null) {
-                    search_for_disease(matches.get(0));
+//                    search_for_disease(matches.get(0));
                 }
             }
 
@@ -125,14 +133,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setListener();
-
         setSupportActionBar(toolbar);
     }
 
     private void getLanguage() {
         language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, MainActivity.this);
-        Log.d("lang", "getLanguage: " + language);
+        Log.d("1234", "getLanguage: " + language);
     }
 
     private void init() {
@@ -140,61 +146,80 @@ public class MainActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
-
-        num_diseases = 10; // Fetch from API disease number, disease names, and images;
-        placeCards(num_diseases);
     }
 
-//    private void fetchDataFromServer() {
-//
-//        final ProgressDialog dialog = new ProgressDialog(this);
-//        dialog.setMessage("Loading...");
-//        dialog.show();
-//
-//        func();
-//
-//        StringRequest request =
-//                new StringRequest(Request.Method.GET, UrlHelper.SIHAPI_URL+ep,
-//                        new Response.Listener<String>() {
-//                            @Override
-//                            public void onResponse(String response) {
-//                                dialog.cancel();
-//                                parseShowsJSON(response);
-//                            }
-//                        },
-//                        new Response.ErrorListener() {
-//                            @Override
-//                            public void onErrorResponse(VolleyError error) {
-//                                dialog.cancel();
-//                                Toast.makeText(MainActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
-//                            }
-//                        });
-//        RequestQueue queue = Volley.newRequestQueue(this);
-//        queue.add(request);
-//    }
-//
-//    private void parseShowsJSON(String response) {
-//
-//    }
+    private void fetchDataFromServer() {
 
-    private void search_for_disease(String input_text){
-        for(String s:disease_names){
-            if(input_text.contains(s)) {
-                if (input_text.contains(SYMPTOMS)) {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setMessage("Loading...");
+        dialog.show();
 
-                } else if (input_text.contains(MANAGEMENT)) {
+        RequestQueue queue = Volley.newRequestQueue(this);
 
-                } else if (input_text.contains(PREVENTION)) {
+        StringRequest request =
+                new StringRequest(Request.Method.GET, UrlHelper.SIHAPI_URL + language,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Toast.makeText(MainActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                parseDiseaseJSON(response);
+                                Log.d("1234", "onResponse: " + response);
+                                dialog.cancel();
+                            }
+                        },
+                        new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                dialog.cancel();
+                                Log.d("1234", "onErrorResponse: " + error);
+                                Toast.makeText(MainActivity.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                } else if (input_text.contains(SPECIAL NEEDS)) {
+        queue.add(request);
+    }
 
-                } else {
+    private void parseDiseaseJSON(String response) {
+        try {
+            object = new JSONObject(response);
+            num_diseases = object.getInt("length");
+            JSONArray disease_json_array = object.getJSONArray("data");
+            Log.d("1234", "num_diseases: " + num_diseases);
 
-                }
-                return;
+            disease_IDs = new int[num_diseases];
+            disease_names=new Vector<>(num_diseases);
+
+            for(int i=0; i<disease_json_array.length(); i++) {
+                disease_names.add(disease_json_array.getJSONObject(i).getString("name"));
+                disease_IDs[i] = disease_json_array.getJSONObject(i).getInt("object_id");
+                Log.d("1234", "disease names: " + disease_names.get(i) + " " + i);
             }
+            placeCards(num_diseases);
+            setListener();
+        }
+        catch (JSONException e) {
+            e.printStackTrace();
         }
     }
+
+//    private void search_for_disease(String input_text){
+//        for(String s:disease_names){
+//            if(input_text.contains(s)) {
+//                if (input_text.contains(SYMPTOMS)) {
+//
+//                } else if (input_text.contains(MANAGEMENT)) {
+//
+//                } else if (input_text.contains(PREVENTION)) {
+//
+//                } else if (input_text.contains(SPECIAL NEEDS)) {
+//
+//                } else {
+//
+//                }
+//                return;
+//            }
+//        }
+//    }
 
     private void placeCards(int num_diseases) {
         RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
@@ -235,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             TextView tv = new TextView(mContext);
             RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             tvparams.addRule(RelativeLayout.BELOW, iv.getId());
-            tv.setText("CardView" + i); // TODO: From API
+            tv.setText(disease_names.get(i));
             tvparams.setMargins(150,350,100,100); // TODO: NEED TO CHANGE... SHOULD BE BELOW IMAGEVIEW
             //tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
             tv.setTextColor(Color.BLACK);
@@ -297,16 +322,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        disease_names=new Vector<>();
         for(int i=0; i<num_diseases; i++) {
+            final int index = i;
             disease_cv[i].setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    final String disease_name = "Cerebral Palsy"; // From API
-                    disease_names.add(disease_name);
-                    Intent i = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
-                    i.putExtra("disease",disease_name);
-                    startActivity(i);
+                    Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                    intent.putExtra("disease",disease_names.get(index));
+                    intent.putExtra("id", disease_IDs[index]);
+                    startActivity(intent);
                 }
             });
         }

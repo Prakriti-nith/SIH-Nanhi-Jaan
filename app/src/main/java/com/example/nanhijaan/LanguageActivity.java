@@ -21,10 +21,10 @@ public class LanguageActivity extends AppCompatActivity {
     }
 
     private void add_listeners() {
-        set_language(hindi_cv, "Hindi");
-        set_language(eng_cv, "English");
-        set_language(telugu_cv, "Telugu");
-        set_language(punjabi_cv, "Punjabi");
+        set_language(hindi_cv, "hindi");
+        set_language(eng_cv, "english");
+        set_language(telugu_cv, "telugu");
+        set_language(punjabi_cv, "punjabi");
     }
 
     private void set_language(CardView cv, final String language) {

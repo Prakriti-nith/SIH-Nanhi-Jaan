@@ -5,5 +5,7 @@ public class UrlHelper {
     language = {hindi, english, punjabi, telugu}
     id = */
 
-    public static final String SIHAPI_URL = "";
+    public static final String SIHAPI_URL = "http://sihnith.herokuapp.com/sihapi/getDataLang/?language=";
+    public static final String SIHAPI_DISEASE_URL = "http://sihnith.herokuapp.com/sihapi/getResource/?id=";
+
 }
