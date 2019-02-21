@@ -63,6 +63,7 @@
                     android:id="@+id/searchet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:imeOptions="actionSearch"
                     android:layout_toRightOf="@id/searchiv"
                     android:layout_toLeftOf="@id/searchib"
                     android:layout_centerInParent="true"

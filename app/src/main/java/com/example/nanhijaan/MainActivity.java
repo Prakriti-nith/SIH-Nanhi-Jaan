@@ -140,11 +140,10 @@ public class MainActivity extends AppCompatActivity {
         search_et.setOnKeyListener(new View.OnKeyListener(){
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event){
-                if(keyCode == event.KEYCODE_ENTER){
+                if(keyCode == event.KEYCODE_ENTER || keyCode == event.KEYCODE_SEARCH || keyCode == event.KEYCODE_ESCAPE){
                     search_for_disease(search_et.getText().toString());
-                    return true;
                 }
-                return false;
+                return true;
             }
         });
 
