@@ -35,7 +35,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     Toolbar toolbar;
     TextView introContent_tv;
     FloatingActionButton fab;
-    CardView symptoms_cv, prevention_cv, mgmt_cv, special_cv;
+    CardView symptoms_cv, prevention_cv, food_cv, special_cv, physical_cv, mental_cv;
     String language, general_info;
     JSONArray  special_needs, foods, physical_ex, mental_ex, symptoms, prevention;
     JSONObject object;
@@ -47,12 +47,17 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_disease_details);
         init();
         getLanguage();
+        setTextViewLanguages();
         Intent mIntent = getIntent();
         disease_id = mIntent.getIntExtra("id", 1);
         fetchDataFromServer();
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Nanhi Jaan");
+
+    }
+
+    private void setTextViewLanguages() {
 
     }
 
@@ -124,7 +129,9 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         fab = findViewById(R.id.fab);
         symptoms_cv = findViewById(R.id.symptomscv);
         prevention_cv = findViewById(R.id.preventioncv);
-        mgmt_cv = findViewById(R.id.managementcv);
+        food_cv = findViewById(R.id.foodcv);
+        physical_cv = findViewById(R.id.physicalcv);
+        mental_cv = findViewById(R.id.mentalcv);
         special_cv = findViewById(R.id.specialcv);
         introContent_tv = findViewById(R.id.intro_content);
     }
@@ -144,7 +151,9 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         });
         setClickListener(symptoms_cv, "Symptoms");
         setClickListener(prevention_cv, "Prevention");
-        setClickListener(mgmt_cv, "Management");
+        setClickListener(food_cv, "Food");
+        setClickListener(physical_cv, "Physical Activity");
+        setClickListener(mental_cv, "Mental Activity");
         setClickListener(special_cv, "Special Needs");
     }
 
@@ -188,21 +197,52 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                     i.putExtra("length", special_needs.length());
 
                     if(language == "hindi") {
-                        heading = getString(R.string.hindi_special);
+                        heading = getString(R.string.hindi_needs);
                     }
                     else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_special);
+                        heading = getString(R.string.punjabi_needs);
                     }
                 }
-                else {
+                else if(title == "Food") {
                     String[] food_str = new String[foods.length()];
-                    String[] mental_str = new String[mental_ex.length()];
-                    String[] physical_str = new String[physical_ex.length()];
                     convertJSONArrayToStringArray(foods, food_str);
-                    convertJSONArrayToStringArray(mental_ex, mental_str);
-                    convertJSONArrayToStringArray(physical_ex, physical_str);
-                    String[] mgmt_str = (String[])ArrayUtils.addAll(first, second);
+                    i.putExtra("content", food_str);
+                    i.putExtra("length", foods.length());
+
+                    if(language == "hindi") {
+                        heading = getString(R.string.hindi_food);
+                    }
+                    else if(language == "punjabi") {
+                        heading = getString(R.string.punjabi_food);
+                    }
                 }
+                else if(title == "Physical Activity") {
+                    String[] physical_str = new String[physical_ex.length()];
+                    convertJSONArrayToStringArray(physical_ex, physical_str);
+                    i.putExtra("content", physical_str);
+                    i.putExtra("length", physical_ex.length());
+
+                    if(language == "hindi") {
+                        heading = getString(R.string.hindi_physical);
+                    }
+                    else if(language == "punjabi") {
+                        heading = getString(R.string.punjabi_physical);
+                    }
+                }
+                else if(title == "Mental Activity") {
+                    String[] mental_str = new String[mental_ex.length()];
+                    convertJSONArrayToStringArray(mental_ex, mental_str);
+                    i.putExtra("content", mental_str);
+                    i.putExtra("length", mental_ex.length());
+
+                    if(language == "hindi") {
+                        heading = getString(R.string.hindi_mental);
+                    }
+                    else if(language == "punjabi") {
+                        heading = getString(R.string.punjabi_mental);
+                    }
+                }
+
                 i.putExtra("heading", heading);
                 startActivity(i);
             }

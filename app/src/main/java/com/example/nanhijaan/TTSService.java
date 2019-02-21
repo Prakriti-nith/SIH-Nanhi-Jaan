@@ -7,11 +7,12 @@ import java.util.Locale;
 
 public class TTSService implements TextToSpeech.OnInitListener {
     Context context;
-    TextToSpeech tts = new TextToSpeech(context, this);
+    TextToSpeech tts;
     Locale locale;
 
     public TTSService(Context c, String language){
         context = c;
+        tts = new TextToSpeech(context, this);
         locale = new Locale(language);
     }
 
