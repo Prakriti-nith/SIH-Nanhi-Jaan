@@ -136,7 +136,7 @@
                         android:layout_marginRight="4dp"
                         android:src="@drawable/ic_keyboard_arrow_right_black_24dp"/>
                     <TextView
-                        android:id="@+id/symtomstv"
+                        android:id="@+id/preventiontv"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_centerInParent="true"

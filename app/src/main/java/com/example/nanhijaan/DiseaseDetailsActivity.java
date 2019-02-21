@@ -33,12 +33,13 @@ import java.util.Vector;
 public class DiseaseDetailsActivity extends AppCompatActivity {
 
     Toolbar toolbar;
-    TextView introContent_tv;
+    TextView introContent_tv, intro_tv, symptoms_tv, prevention_tv, food_tv, special_tv, physical_tv, mental_tv;
     FloatingActionButton fab;
     CardView symptoms_cv, prevention_cv, food_cv, special_cv, physical_cv, mental_cv;
     String language, general_info;
     JSONArray  special_needs, foods, physical_ex, mental_ex, symptoms, prevention;
     JSONObject object;
+    String introStr, preventionStr, symptomsStr, foodStr, physicalStr, mentalStr, specialStr;
     int disease_id;
 
     @Override
@@ -58,7 +59,40 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     }
 
     private void setTextViewLanguages() {
-
+        if(language == "hindi") {
+            introStr = getString(R.string.hindi_introduction);
+            preventionStr = getString(R.string.hindi_prevention);
+            symptomsStr = getString(R.string.hindi_symptoms);
+            foodStr = getString(R.string.hindi_food);
+            physicalStr = getString(R.string.hindi_physical);
+            mentalStr = getString(R.string.hindi_mental);
+            specialStr = getString(R.string.hindi_needs);
+        }
+        else if(language == "punjabi") {
+            introStr = getString(R.string.punjabi_introduction);
+            preventionStr = getString(R.string.punjabi_prevention);
+            symptomsStr = getString(R.string.punjabi_symptoms);
+            foodStr = getString(R.string.punjabi_food);
+            physicalStr = getString(R.string.punjabi_physical);
+            mentalStr = getString(R.string.punjabi_mental);
+            specialStr = getString(R.string.punjabi_needs);
+        }
+        else if(language == "english") {
+            introStr = getString(R.string.eng_introduction);
+            preventionStr = getString(R.string.eng_prevention);
+            symptomsStr = getString(R.string.eng_symptoms);
+            foodStr = getString(R.string.eng_food);
+            physicalStr = getString(R.string.eng_physical);
+            mentalStr = getString(R.string.eng_mental);
+            specialStr = getString(R.string.eng_needs);
+        }
+        intro_tv.setText(introStr);
+        prevention_tv.setText(preventionStr);
+        symptoms_tv.setText(symptomsStr);
+        food_tv.setText(foodStr);
+        physical_tv.setText(physicalStr);
+        mental_tv.setText(mentalStr);
+        special_tv.setText(specialStr);
     }
 
     private void fetchDataFromServer() {
@@ -127,6 +161,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
+
         symptoms_cv = findViewById(R.id.symptomscv);
         prevention_cv = findViewById(R.id.preventioncv);
         food_cv = findViewById(R.id.foodcv);
@@ -134,6 +169,14 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         mental_cv = findViewById(R.id.mentalcv);
         special_cv = findViewById(R.id.specialcv);
         introContent_tv = findViewById(R.id.intro_content);
+
+        symptoms_tv = findViewById(R.id.symtomstv);
+        intro_tv = findViewById(R.id.intro);
+        prevention_tv = findViewById(R.id.preventiontv);
+        food_tv = findViewById(R.id.foodtv);
+        physical_tv = findViewById(R.id.physicaltv);
+        mental_tv = findViewById(R.id.mentaltv);
+        special_tv = findViewById(R.id.specialtv);
     }
 
     private void getLanguage() {
