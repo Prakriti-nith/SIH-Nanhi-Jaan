@@ -1,85 +1,27 @@
 package com.example.nanhijaan;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.Context;
 import android.speech.tts.TextToSpeech;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
 
 import java.util.Locale;
 
-public class TTSService extends Activity implements TextToSpeech.OnInitListener {
-    TextToSpeech mTTS = null;
-    private final int ACT_CHECK_TTS_DATA = 1000;
+public class TTSService implements TextToSpeech.OnInitListener {
+    Context context;
+    TextToSpeech tts = new TextToSpeech(context, this);
+    Locale locale;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.);
-        final EditText ettext = (EditText)findViewById(R.id.ettext);
-        final Button bsay = (Button)findViewById(R.id.bsay);
-        bsay.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saySomething(ettext.getText().toString().trim(), 1);
-            }
-        });
-
-        // Check to see if we have TTS voice data
-        Intent ttsIntent = new Intent();
-        ttsIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
-        startActivityForResult(ttsIntent, ACT_CHECK_TTS_DATA);
+    public TTSService(Context c, String language){
+        context = c;
+        locale = new Locale(language);
     }
 
-    private void saySomething(String text, int qmode) {
-        if (qmode == 1)
-            mTTS.speak(text, TextToSpeech.QUEUE_ADD, null);
-        else
-            mTTS.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode,
-                                    Intent data) {
-        if (requestCode == ACT_CHECK_TTS_DATA) {
-            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS) {
-                // Data exists, so we instantiate the TTS engine
-                mTTS = new TextToSpeech(this, this);
-            } else {
-                // Data is missing, so we start the TTS
-                // installation process
-                Intent installIntent = new Intent();
-                installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
-                startActivity(installIntent);
-            }
+    public void onInit(int initStatus) {
+        if (initStatus == TextToSpeech.SUCCESS) {
+            tts.setLanguage(locale);
         }
     }
 
-    public void onInit(int status) {
-        if (status == TextToSpeech.SUCCESS) {
-            if (mTTS != null) {
-                int result = mTTS.setLanguage(Locale.US);
-                if (result == TextToSpeech.LANG_MISSING_DATA ||
-                        result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                    Toast.makeText(this, "TTS language is not supported", Toast.LENGTH_LONG).show();
-                } else {
-                    saySomething("TTS is ready", 0);
-                }
-            }
-        } else {
-            Toast.makeText(this, "TTS initialization failed",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (mTTS != null) {
-            mTTS.stop();
-            mTTS.shutdown();
-        }
-        super.onDestroy();
+    public void say(String announcement) {
+        tts.speak(announcement, TextToSpeech.QUEUE_FLUSH, null);
     }
 }
