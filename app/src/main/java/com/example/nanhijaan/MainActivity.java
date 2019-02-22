@@ -137,13 +137,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        search_et.setOnKeyListener(new View.OnKeyListener(){
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event){
-                if(keyCode == event.KEYCODE_ENTER || keyCode == event.KEYCODE_SEARCH || keyCode == event.KEYCODE_ESCAPE){
-                    search_for_disease(search_et.getText().toString());
+        search_et.setOnKeyListener(new View.OnKeyListener()
+        {
+            public boolean onKey(View v, int keyCode, KeyEvent event)
+            {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                {
+                    switch (keyCode)
+                    {
+                        case KeyEvent.KEYCODE_DPAD_CENTER:
+                        case KeyEvent.KEYCODE_ENTER:
+                            search_for_disease(search_et.getText().toString());
+                            return true;
+                        default:
+                            break;
+                    }
                 }
-                return true;
+                return false;
             }
         });
 
@@ -234,13 +244,13 @@ public class MainActivity extends AppCompatActivity {
 
     private void search_for_disease(String input_text){
         for(int i=0;i<disease_names.size();i++){
-            Log.d("speech or search tag","searched for "+disease_names.get(i));
+            Toast.makeText(mContext, "searched for "+disease_names.get(i), Toast.LENGTH_SHORT).show();
             if(input_text.contains(disease_names.get(i))) {
                 disease_cv[i].performClick();
                 return;
             }
         }
-        Toast.makeText(getApplicationContext(), "No search results found!", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "No search results found! "+disease_names.size(), Toast.LENGTH_SHORT).show();
     }
 
     private void placeCards(int num_diseases) {
