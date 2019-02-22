@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -56,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
+    String language, languageStr, contactStr, parentStr;
     EditText search_et;
-    String language;
     JSONObject object;
+    MenuItem languageItem, contactItem, parentItem;
+    Menu menu;
 
     public static final int RECORD_AUDIO = 0;
     final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -137,27 +140,28 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        search_et.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-                            search_for_disease(search_et.getText().toString());
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
-            }
-        });
-
         setSupportActionBar(toolbar);
+    }
+
+    private void setMenuLanguages() {
+        if(language == "hindi") {
+            parentStr = getString(R.string.hindi_suggestions);
+            contactStr = getString(R.string.hindi_contact);
+            languageStr = getString(R.string.hindi_language);
+        }
+        else if(language == "punjabi") {
+            parentStr = getString(R.string.punjabi_suggestions);
+            contactStr = getString(R.string.punjabi_contact);
+            languageStr = getString(R.string.punjabi_language);
+        }
+        else if(language == "english") {
+            parentStr = getString(R.string.eng_suggestions);
+            contactStr = getString(R.string.eng_contact);
+            languageStr = getString(R.string.eng_language);
+        }
+        languageItem.setTitle(languageStr);
+        contactItem.setTitle(contactStr);
+        parentItem.setTitle(parentStr);
     }
 
     private void getLanguage() {
@@ -186,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(MainActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Data received", Toast.LENGTH_SHORT).show();
 
                                 response= fixEncoding(response);
 
@@ -371,12 +375,29 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search_for_disease(search_et.getText().toString());
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        parentItem = menu.findItem(R.id.action_parent);
+        contactItem = menu.findItem(R.id.action_contact);
+        languageItem = menu.findItem(R.id.action_language);
+        setMenuLanguages();
         return true;
     }
 

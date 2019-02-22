@@ -1,7 +1,10 @@
 package com.example.nanhijaan;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -32,7 +35,6 @@ import java.util.Vector;
 
 public class DiseaseDetailsActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
     TextView introContent_tv, intro_tv, symptoms_tv, prevention_tv, food_tv, special_tv, physical_tv, mental_tv;
     FloatingActionButton fab;
     CardView symptoms_cv, prevention_cv, food_cv, special_cv, physical_cv, mental_cv;
@@ -40,7 +42,10 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     JSONArray  special_needs, foods, physical_ex, mental_ex, symptoms, prevention;
     JSONObject object;
     String introStr, preventionStr, symptomsStr, foodStr, physicalStr, mentalStr, specialStr;
+    String languageStr, contactStr, parentStr, diseaseStr;
     int disease_id;
+    MenuItem languageItem, contactItem, parentItem;
+    Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,11 +56,38 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         setTextViewLanguages();
         Intent mIntent = getIntent();
         disease_id = mIntent.getIntExtra("id", 1);
+        diseaseStr = mIntent.getStringExtra("disease");
+        //actionBarSetup();
         fetchDataFromServer();
+    }
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Nanhi Jaan");
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    private void actionBarSetup() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+            ActionBar ab = getActionBar();
+            ab.setTitle(diseaseStr);
+        }
+    }
 
+    private void setMenuLanguages() {
+        if(language == "hindi") {
+            parentStr = getString(R.string.hindi_suggestions);
+            contactStr = getString(R.string.hindi_contact);
+            languageStr = getString(R.string.hindi_language);
+        }
+        else if(language == "punjabi") {
+            parentStr = getString(R.string.punjabi_suggestions);
+            contactStr = getString(R.string.punjabi_contact);
+            languageStr = getString(R.string.punjabi_language);
+        }
+        else if(language == "english") {
+            parentStr = getString(R.string.eng_suggestions);
+            contactStr = getString(R.string.eng_contact);
+            languageStr = getString(R.string.eng_language);
+        }
+        languageItem.setTitle(languageStr);
+        contactItem.setTitle(contactStr);
+        parentItem.setTitle(parentStr);
     }
 
     private void setTextViewLanguages() {
@@ -107,7 +139,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(DiseaseDetailsActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DiseaseDetailsActivity.this, "Data received", Toast.LENGTH_SHORT).show();
                                 response= fixEncoding(response);
                                 parseDiseaseDetailsJSON(response);
                                 dialog.cancel();
@@ -159,7 +191,6 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     }
 
     private void init() {
-        toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
 
         symptoms_cv = findViewById(R.id.symptomscv);
@@ -212,78 +243,42 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                     convertJSONArrayToStringArray(symptoms, symptoms_str);
                     i.putExtra("content", symptoms_str);
                     i.putExtra("length", symptoms.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_symptoms);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_symptoms);
-                    }
+                    heading = symptomsStr;
                 }
                 else if(title == "Prevention") {
                     String[] preventions_str = new String[prevention.length()];
                     convertJSONArrayToStringArray(prevention, preventions_str);
                     i.putExtra("content", preventions_str);
                     i.putExtra("length", prevention.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_prevention);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_prevention);
-                    }
+                    heading = preventionStr;
                 }
                 else if(title == "Special Needs") {
                     String[] special_str = new String[special_needs.length()];
                     convertJSONArrayToStringArray(special_needs, special_str);
                     i.putExtra("content", special_str);
                     i.putExtra("length", special_needs.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_needs);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_needs);
-                    }
+                    heading = specialStr;
                 }
                 else if(title == "Food") {
                     String[] food_str = new String[foods.length()];
                     convertJSONArrayToStringArray(foods, food_str);
                     i.putExtra("content", food_str);
                     i.putExtra("length", foods.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_food);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_food);
-                    }
+                    heading = foodStr;
                 }
                 else if(title == "Physical Activity") {
                     String[] physical_str = new String[physical_ex.length()];
                     convertJSONArrayToStringArray(physical_ex, physical_str);
                     i.putExtra("content", physical_str);
                     i.putExtra("length", physical_ex.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_physical);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_physical);
-                    }
+                    heading = physicalStr;
                 }
                 else if(title == "Mental Activity") {
                     String[] mental_str = new String[mental_ex.length()];
                     convertJSONArrayToStringArray(mental_ex, mental_str);
                     i.putExtra("content", mental_str);
                     i.putExtra("length", mental_ex.length());
-
-                    if(language == "hindi") {
-                        heading = getString(R.string.hindi_mental);
-                    }
-                    else if(language == "punjabi") {
-                        heading = getString(R.string.punjabi_mental);
-                    }
+                    heading = mentalStr;
                 }
 
                 i.putExtra("heading", heading);
@@ -306,6 +301,11 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        parentItem = menu.findItem(R.id.action_parent);
+        contactItem = menu.findItem(R.id.action_contact);
+        languageItem = menu.findItem(R.id.action_language);
+        setMenuLanguages();
         return true;
     }
 
