@@ -22,6 +22,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -136,26 +137,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onEvent(int i, Bundle bundle) {
 
-            }
-        });
-
-        search_et.setOnKeyListener(new View.OnKeyListener()
-        {
-            public boolean onKey(View v, int keyCode, KeyEvent event)
-            {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                {
-                    switch (keyCode)
-                    {
-                        case KeyEvent.KEYCODE_DPAD_CENTER:
-                        case KeyEvent.KEYCODE_ENTER:
-                            search_for_disease(search_et.getText().toString());
-                            return true;
-                        default:
-                            break;
-                    }
-                }
-                return false;
             }
         });
 
@@ -392,6 +373,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
+
+        search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    search_for_disease(search_et.getText().toString());
+
+                    return true;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
