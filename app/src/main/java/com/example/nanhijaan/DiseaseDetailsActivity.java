@@ -139,7 +139,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(DiseaseDetailsActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(DiseaseDetailsActivity.this, "Data received", Toast.LENGTH_SHORT).show();
                                 response= fixEncoding(response);
                                 parseDiseaseDetailsJSON(response);
                                 dialog.cancel();

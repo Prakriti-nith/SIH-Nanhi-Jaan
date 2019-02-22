@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(MainActivity.this, "Chal raha hai baki", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MainActivity.this, "Data received", Toast.LENGTH_SHORT).show();
 
                                 response= fixEncoding(response);
 
