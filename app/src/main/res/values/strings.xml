@@ -73,14 +73,34 @@
     //Special Needs
 
     <string name="eng_needs">Special Needs</string>
-    <string name="hindi_needs">ਵਿਸ਼ੇਸ਼ ਲੋੜਾਂ</string>
-    <string name="punjabi_needs">विशेष जरूरतों</string>
+    <string name="punjabi_needs">ਵਿਸ਼ੇਸ਼ ਲੋੜਾਂ</string>
+    <string name="hindi_needs">विशेष जरूरतों</string>
 
 
     //Introduction
     <string name="eng_introduction">Introduction</string>
     <string name="hindi_introduction">परिचय</string>
     <string name="punjabi_introduction">ਜਾਣ ਪਛਾਣ</string>
+
+    //Choose a language
+    <string name="eng_choose_language">Choose a language</string>
+    <string name="hindi_choose_language">एक भाषा चुनें</string>
+    <string name="punjabi_choose_language">ਇੱਕ ਭਾਸ਼ਾ ਚੁਣੋ</string>
+
+    //Suggestions and feedback
+    <string name="eng_sugg">Suggestions and Feedback</string>
+    <string name="hindi_sugg">सुझाव और प्रतिक्रिया</string>
+    <string name="punjabi_sugg">ਸੁਝਾਅ ਅਤੇ ਸੁਝਾਅ</string>
+
+    //Submit
+    <string name="eng_submit">Submit</string>
+    <string name="hindi_submit">जमा करें</string>
+    <string name="punjabi_submit">ਜਮ੍ਹਾਂ ਕਰੋ</string>
+
+    // Made by team
+    <string name="eng_madeby">Made by team</string>
+    <string name="hindi_madeby">टीम द्वारा बनाया गया</string>
+    <string name="punjabi_madeby">ਟੀਮ ਦੁਆਰਾ ਬਣਾਇਆ ਗਿਆ</string>
 
   
 </resources>

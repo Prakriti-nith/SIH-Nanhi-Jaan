@@ -4,21 +4,26 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 public class SymptomsDetailsActivity extends AppCompatActivity {
 
-    Toolbar toolbar;
     String heading, content[], details = "";
     TextView heading_tv, content_tv;
+    Menu menu;
+    String language;
+    String languageStr, contactStr, parentStr;
+    MenuItem languageItem, contactItem, parentItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_symptoms_details);
         init();
+        getLanguage();
         Intent mIntent = getIntent();
         heading = mIntent.getStringExtra("heading");
         heading_tv.setText(heading);
@@ -31,15 +36,46 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
         content_tv.setText(details);
     }
 
+    private void getLanguage() {
+        language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, SymptomsDetailsActivity.this);
+        Log.d("1234", "getLanguage: " + language);
+    }
+
     private void init() {
         heading_tv = findViewById(R.id.intro);
         content_tv = findViewById(R.id.intro_content);
+    }
+
+    private void setMenuLanguages() {
+        if(language == "hindi") {
+            parentStr = getString(R.string.hindi_suggestions);
+            contactStr = getString(R.string.hindi_contact);
+            languageStr = getString(R.string.hindi_language);
+        }
+        else if(language == "punjabi") {
+            parentStr = getString(R.string.punjabi_suggestions);
+            contactStr = getString(R.string.punjabi_contact);
+            languageStr = getString(R.string.punjabi_language);
+        }
+        else if(language == "english") {
+            parentStr = getString(R.string.eng_suggestions);
+            contactStr = getString(R.string.eng_contact);
+            languageStr = getString(R.string.eng_language);
+        }
+        languageItem.setTitle(languageStr);
+        contactItem.setTitle(contactStr);
+        parentItem.setTitle(parentStr);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        this.menu = menu;
+        parentItem = menu.findItem(R.id.action_parent);
+        contactItem = menu.findItem(R.id.action_contact);
+        languageItem = menu.findItem(R.id.action_language);
+        setMenuLanguages();
         return true;
     }
 
