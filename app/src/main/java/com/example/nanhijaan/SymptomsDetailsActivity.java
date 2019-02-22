@@ -1,12 +1,14 @@
 package com.example.nanhijaan;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 public class SymptomsDetailsActivity extends AppCompatActivity {
@@ -17,6 +19,9 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
     String language;
     String languageStr, contactStr, parentStr;
     MenuItem languageItem, contactItem, parentItem;
+    FloatingActionButton fab;
+    private TTSService tts;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +29,7 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_symptoms_details);
         init();
         getLanguage();
+        tts = new TTSService(getApplicationContext());
         Intent mIntent = getIntent();
         heading = mIntent.getStringExtra("heading");
         heading_tv.setText(heading);
@@ -34,6 +40,17 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
             details = details + content[i] + "\n";
         }
         content_tv.setText(details);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                StringBuilder smf = new StringBuilder(heading + ". ");
+                for(String ct:content){
+                    smf.append(ct + ". ");
+                }
+                tts.say(smf.toString());
+            }
+        });
     }
 
     private void getLanguage() {
@@ -44,6 +61,7 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
     private void init() {
         heading_tv = findViewById(R.id.intro);
         content_tv = findViewById(R.id.intro_content);
+        fab = findViewById(R.id.fab);
     }
 
     private void setMenuLanguages() {

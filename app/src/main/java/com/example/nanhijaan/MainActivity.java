@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
-        Toast.makeText(getApplicationContext(), "No search results found! "+disease_names.size(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "No search results found! ", Toast.LENGTH_SHORT).show();
     }
 
     private void placeCards(int num_diseases) {
