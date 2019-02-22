@@ -243,9 +243,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void search_for_disease(String input_text){
+        //Toast.makeText(mContext, input_text, Toast.LENGTH_SHORT).show();
+        input_text = input_text.toLowerCase();
         for(int i=0;i<disease_names.size();i++){
-            Toast.makeText(mContext, "searched for "+disease_names.get(i), Toast.LENGTH_SHORT).show();
-            if(input_text.contains(disease_names.get(i))) {
+            //Toast.makeText(mContext, "searched for "+disease_names.get(i), Toast.LENGTH_SHORT).show();
+            if(input_text.contains(disease_names.get(i).toLowerCase())) {
                 disease_cv[i].performClick();
                 return;
             }
