@@ -47,17 +47,17 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
     }
 
     private void setMenuLanguages() {
-        if(language == "hindi") {
+        if(language.equals("hindi")) {
             parentStr = getString(R.string.hindi_suggestions);
             contactStr = getString(R.string.hindi_contact);
             languageStr = getString(R.string.hindi_language);
         }
-        else if(language == "punjabi") {
+        else if(language.equals("punjabi")) {
             parentStr = getString(R.string.punjabi_suggestions);
             contactStr = getString(R.string.punjabi_contact);
             languageStr = getString(R.string.punjabi_language);
         }
-        else if(language == "english") {
+        else if(language.equals("english")) {
             parentStr = getString(R.string.eng_suggestions);
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);

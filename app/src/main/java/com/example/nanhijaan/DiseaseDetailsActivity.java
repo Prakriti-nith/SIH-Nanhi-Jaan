@@ -70,17 +70,17 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     }
 
     private void setMenuLanguages() {
-        if(language == "hindi") {
+        if(language.equals("hindi")) {
             parentStr = getString(R.string.hindi_suggestions);
             contactStr = getString(R.string.hindi_contact);
             languageStr = getString(R.string.hindi_language);
         }
-        else if(language == "punjabi") {
+        else if(language.equals("punjabi")) {
             parentStr = getString(R.string.punjabi_suggestions);
             contactStr = getString(R.string.punjabi_contact);
             languageStr = getString(R.string.punjabi_language);
         }
-        else if(language == "english") {
+        else if(language.equals("english")) {
             parentStr = getString(R.string.eng_suggestions);
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);
@@ -91,7 +91,8 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     }
 
     private void setTextViewLanguages() {
-        if(language == "hindi") {
+        if(language.equals("hindi")) {
+            Log.d("1234", "setTextViewLanguages: " + "hindi string set");
             introStr = getString(R.string.hindi_introduction);
             preventionStr = getString(R.string.hindi_prevention);
             symptomsStr = getString(R.string.hindi_symptoms);
@@ -100,7 +101,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
             mentalStr = getString(R.string.hindi_mental);
             specialStr = getString(R.string.hindi_needs);
         }
-        else if(language == "punjabi") {
+        else if(language.equals("punjabi")) {
             introStr = getString(R.string.punjabi_introduction);
             preventionStr = getString(R.string.punjabi_prevention);
             symptomsStr = getString(R.string.punjabi_symptoms);
@@ -109,7 +110,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
             mentalStr = getString(R.string.punjabi_mental);
             specialStr = getString(R.string.punjabi_needs);
         }
-        else if(language == "english") {
+        else if(language.equals("english")) {
             introStr = getString(R.string.eng_introduction);
             preventionStr = getString(R.string.eng_prevention);
             symptomsStr = getString(R.string.eng_symptoms);
@@ -125,6 +126,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         physical_tv.setText(physicalStr);
         mental_tv.setText(mentalStr);
         special_tv.setText(specialStr);
+        Log.d("1234", "setTextViewLanguages: " + "hindi tv set");
     }
 
     private void fetchDataFromServer() {
