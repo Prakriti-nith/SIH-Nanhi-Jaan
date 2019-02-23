@@ -46,6 +46,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
     int disease_id;
     MenuItem languageItem, contactItem, parentItem;
     Menu menu;
+    private TTSService tts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         init();
         getLanguage();
         setTextViewLanguages();
+        tts = new TTSService(getApplicationContext());
         Intent mIntent = getIntent();
         disease_id = mIntent.getIntExtra("id", 1);
         diseaseStr = mIntent.getStringExtra("disease");
@@ -221,8 +223,9 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                StringBuilder smf = new StringBuilder(introStr + ". " + introContent_tv.getText() + ". ");
+                smf.append(symptomsStr + ". " + preventionStr + ". " + foodStr + ". " + physicalStr + ". " + mentalStr + ". " + specialStr);
+                tts.say(smf.toString());
             }
         });
         setClickListener(symptoms_cv, "Symptoms");
