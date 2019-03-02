@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 public class LanguageActivity extends AppCompatActivity {
 
-    CardView eng_cv, hindi_cv, punjabi_cv;
+    CardView eng_cv, hindi_cv, punjabi_cv,bengali_cv,tamil_cv,telugu_cv;
     TextView choose_tv;
     String language, titleStr;
 
@@ -31,21 +31,34 @@ public class LanguageActivity extends AppCompatActivity {
     }
 
     private void setTextViewLanguages() {
-        if(language == "hindi") {
+        if(language.equals("hindi")) {
             choose_tv.setText(getString(R.string.hindi_choose_language));
         }
-        else if(language == "punjabi") {
+        else if(language.equals("punjabi")) {
             choose_tv.setText(getString(R.string.punjabi_choose_language));
         }
-        else if(language == "english") {
+        else if(language.equals("english")){
             choose_tv.setText(getString(R.string.eng_choose_language));
         }
+        else if(language.equals("bengali")){
+            choose_tv.setText(getString(R.string.bengali_choose_language));
+        }
+        else if(language.equals("tamil")){
+            choose_tv.setText(getString(R.string.tamil_choose_language));
+        }
+        else if(language.equals("telugu")){
+            choose_tv.setText(getString(R.string.telugu_choose_language));
+        }
+
     }
 
     private void add_listeners() {
         set_language(hindi_cv, "hindi");
         set_language(eng_cv, "english");
         set_language(punjabi_cv, "punjabi");
+        set_language(bengali_cv, "bengali");
+        set_language(tamil_cv, "tamil");
+        set_language(telugu_cv, "telugu");
     }
 
     private void getLanguage() {
@@ -56,6 +69,12 @@ public class LanguageActivity extends AppCompatActivity {
             titleStr = getString(R.string.hindi_nanhijaan);
         else if(language.equals("punjabi"))
             titleStr = getString(R.string.punjabi_nanhijaan);
+        else if(language.equals("bengali"))
+            titleStr = getString(R.string.bengali_nanhijaan);
+        else if(language.equals("tamil"))
+            titleStr = getString(R.string.tamil_nanhijaan);
+        else if(language.equals("telugu"))
+            titleStr = getString(R.string.telugu_nanhijaan);
         Log.d("1234", "getLanguage: " + language);
     }
 
@@ -75,6 +94,10 @@ public class LanguageActivity extends AppCompatActivity {
         eng_cv = findViewById(R.id.englishcv);
         hindi_cv = findViewById(R.id.hindicv);
         punjabi_cv = findViewById(R.id.punjabicv);
+        bengali_cv = findViewById(R.id.bengalicv);
+        tamil_cv = findViewById(R.id.tamilcv);
+        telugu_cv = findViewById(R.id.telugucv);
+
 
         choose_tv = findViewById(R.id.language_tv);
     }

@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
             parentStr = getString(R.string.hindi_suggestions);
             contactStr = getString(R.string.hindi_contact);
             languageStr = getString(R.string.hindi_language);
+
         }
         else if(language.equals("punjabi")) {
             parentStr = getString(R.string.punjabi_suggestions);
@@ -163,6 +164,21 @@ public class MainActivity extends AppCompatActivity {
             parentStr = getString(R.string.eng_suggestions);
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);
+        }
+       else if(language.equals("bengali")) {
+            parentStr = getString(R.string.bengali_suggestions);
+            contactStr = getString(R.string.bengali_contact);
+            languageStr = getString(R.string.bengali_language);
+        }
+        else if(language.equals("tamil")) {
+            parentStr = getString(R.string.tamil_suggestions);
+            contactStr = getString(R.string.tamil_contact);
+            languageStr = getString(R.string.tamil_language);
+        }
+        else if(language.equals("telugu")) {
+            parentStr = getString(R.string.telugu_suggestions);
+            contactStr = getString(R.string.telugu_contact);
+            languageStr = getString(R.string.telugu_language);
         }
         languageItem.setTitle(languageStr);
         contactItem.setTitle(contactStr);
@@ -177,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
             titleStr = getString(R.string.hindi_nanhijaan);
         else if(language.equals("punjabi"))
             titleStr = getString(R.string.punjabi_nanhijaan);
+        else if(language.equals("bengali"))
+            titleStr = getString(R.string.bengali_nanhijaan);
+        else if(language.equals("tamil"))
+            titleStr = getString(R.string.tamil_nanhijaan);
+        else if(language.equals("telugu"))
+            titleStr = getString(R.string.telugu_nanhijaan);
         Log.d("1234", "getLanguage: " + language);
     }
 

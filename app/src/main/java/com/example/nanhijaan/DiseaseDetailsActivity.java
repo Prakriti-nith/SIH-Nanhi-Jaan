@@ -80,6 +80,21 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);
         }
+        else if(language.equals("bengali")) {
+            parentStr = getString(R.string.bengali_suggestions);
+            contactStr = getString(R.string.bengali_contact);
+            languageStr = getString(R.string.bengali_language);
+        }
+        else if(language.equals("tamil")) {
+            parentStr = getString(R.string.tamil_suggestions);
+            contactStr = getString(R.string.tamil_contact);
+            languageStr = getString(R.string.tamil_language);
+        }
+        else if(language.equals("telugu")) {
+            parentStr = getString(R.string.telugu_suggestions);
+            contactStr = getString(R.string.telugu_contact);
+            languageStr = getString(R.string.telugu_language);
+        }
         languageItem.setTitle(languageStr);
         contactItem.setTitle(contactStr);
         parentItem.setTitle(parentStr);
@@ -114,6 +129,34 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
             mentalStr = getString(R.string.eng_mental);
             specialStr = getString(R.string.eng_needs);
         }
+        else if(language.equals("bengali")) {
+            introStr = getString(R.string.bengali_introduction);
+            preventionStr = getString(R.string.bengali_prevention);
+            symptomsStr = getString(R.string.bengali_symptoms);
+            foodStr = getString(R.string.bengali_food);
+            physicalStr = getString(R.string.bengali_physical);
+            mentalStr = getString(R.string.bengali_mental);
+            specialStr = getString(R.string.bengali_needs);
+        }
+        else if(language.equals("tamil")) {
+            introStr = getString(R.string.tamil_introduction);
+            preventionStr = getString(R.string.tamil_prevention);
+            symptomsStr = getString(R.string.tamil_symptoms);
+            foodStr = getString(R.string.tamil_food);
+            physicalStr = getString(R.string.tamil_physical);
+            mentalStr = getString(R.string.tamil_mental);
+            specialStr = getString(R.string.tamil_needs);
+        }
+        else if(language.equals("telugu")) {
+            introStr = getString(R.string.telugu_introduction);
+            preventionStr = getString(R.string.telugu_prevention);
+            symptomsStr = getString(R.string.telugu_symptoms);
+            foodStr = getString(R.string.telugu_food);
+            physicalStr = getString(R.string.telugu_physical);
+            mentalStr = getString(R.string.telugu_mental);
+            specialStr = getString(R.string.telugu_needs);
+        }
+
         intro_tv.setText(introStr);
         prevention_tv.setText(preventionStr);
         symptoms_tv.setText(symptomsStr);

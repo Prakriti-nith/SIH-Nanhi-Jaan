@@ -17,10 +17,13 @@
     <activity android:name=".LanguageActivity" />
     <activity android:name=".ParentSuggestions" />
     <activity android:name=".SymptomsDetailsActivity" />
-    <activity android:name=".WelcomeActivity">
+    <activity
+        android:name=".WelcomeActivity"
+        android:theme="@style/AppTheme.NoActionBar">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+
         </intent-filter>
     </activity>
     <activity

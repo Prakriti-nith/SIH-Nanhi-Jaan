@@ -84,6 +84,21 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);
         }
+        else if(language.equals("bengali")) {
+            parentStr = getString(R.string.bengali_suggestions);
+            contactStr = getString(R.string.bengali_contact);
+            languageStr = getString(R.string.bengali_language);
+        }
+        else if(language.equals("tamil")) {
+            parentStr = getString(R.string.tamil_suggestions);
+            contactStr = getString(R.string.tamil_contact);
+            languageStr = getString(R.string.tamil_language);
+        }
+        else if(language.equals("telugu")) {
+            parentStr = getString(R.string.telugu_suggestions);
+            contactStr = getString(R.string.telugu_contact);
+            languageStr = getString(R.string.telugu_language);
+        }
         languageItem.setTitle(languageStr);
         contactItem.setTitle(contactStr);
         parentItem.setTitle(parentStr);
