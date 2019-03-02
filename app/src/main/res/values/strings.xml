@@ -103,17 +103,11 @@
     <string name="hindi_madeby">टीम द्वारा बनाया गया</string>
     <string name="punjabi_madeby">ਟੀਮ ਦੁਆਰਾ ਬਣਾਇਆ ਗਿਆ</string>
 
-    // data received
 
-    <string name="eng_datareceived">Data Received</string>
-    <string name="hindi_datareceived">जमा करे</string>
-    <string name="punjabi_datareceived">ਜਮ੍ਹਾਂ ਕਰੋ</string>
-
-// internet connection
-
-    <string name="eng_internet">Check Your Internet Connection</string>
-    <string name="hindi_internet">जमा करे</string>
-    <string name="punjabi_internet">ਜਮ੍ਹਾਂ ਕਰੋ</string>
+    // Nanhi Jaan
+    <string name="eng_nanhijaan">Nanhi Jaan</string>
+    <string name="hindi_nanhijaan">नन्ही जान</string>
+    <string name="punjabi_nanhijaan">ਨੰਨੀਂ ਜਾਨ</string>
 
 
     <string name="title_activity_welcome">Home Screen</string>

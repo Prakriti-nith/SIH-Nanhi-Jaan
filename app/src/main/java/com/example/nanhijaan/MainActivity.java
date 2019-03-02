@@ -13,6 +13,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -57,11 +58,12 @@ public class MainActivity extends AppCompatActivity {
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
-    String language, languageStr, contactStr, parentStr;
+    String language, languageStr, contactStr, parentStr, titleStr;
     EditText search_et;
     JSONObject object;
     MenuItem languageItem, contactItem, parentItem;
     Menu menu;
+    int[] myImageList;
 
     public static final int RECORD_AUDIO = 0;
     final SpeechRecognizer mSpeechRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
         init();
         getLanguage();
+        myImageList = new int[]{R.drawable.fetus, R.drawable.pregnant, R.drawable.baby, R.drawable.baby1};
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
@@ -141,6 +144,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(titleStr);
     }
 
     private void setMenuLanguages() {
@@ -166,6 +171,12 @@ public class MainActivity extends AppCompatActivity {
 
     private void getLanguage() {
         language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, MainActivity.this);
+        if(language.equals("english"))
+            titleStr = getString(R.string.eng_nanhijaan);
+        else if(language.equals("hindi"))
+            titleStr = getString(R.string.hindi_nanhijaan);
+        else if(language.equals("punjabi"))
+            titleStr = getString(R.string.punjabi_nanhijaan);
         Log.d("1234", "getLanguage: " + language);
     }
 
@@ -262,6 +273,7 @@ public class MainActivity extends AppCompatActivity {
     private void placeCards(int num_diseases) {
         RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
         disease_cv = new CardView[num_diseases];
+        int it_images = 0;
 
         for(int i=0; i<num_diseases; i++) {
             disease_cv[i] = new CardView(mContext);
@@ -287,7 +299,13 @@ public class MainActivity extends AppCompatActivity {
             //            Put ImageView on CardView
             ImageView iv = new ImageView(mContext);
             iv.setId(i + 10000);
-            iv.setImageResource(R.mipmap.ic_launcher);  // TODO: From API
+            if(it_images > 3) {
+                it_images = 0;
+            }
+            else {
+                it_images++;
+            }
+            iv.setImageResource(myImageList[it_images]);  // TODO: From API
             RelativeLayout.LayoutParams ivparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             ivparams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
             ivparams.setMargins(150,150,100,100);
