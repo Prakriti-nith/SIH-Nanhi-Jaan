@@ -5,7 +5,9 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
@@ -16,8 +18,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -45,10 +51,11 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements DiseaseAdapter.ItemClickListener {
 
     private Context mContext;
     Toolbar toolbar;
@@ -63,6 +70,9 @@ public class MainActivity extends AppCompatActivity {
     JSONObject object;
     MenuItem languageItem, contactItem, parentItem;
     Menu menu;
+    private RecyclerView recyclerView;
+    private DiseaseAdapter adapter;
+    private List<Disease> diseaseList;
     int[] myImageList;
 
     public static final int RECORD_AUDIO = 0;
@@ -78,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
 
+        myImageList = new int[]{R.drawable.ic_hearing_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp};
         init();
         getLanguage();
         myImageList = new int[]{R.drawable.fetus, R.drawable.pregnant, R.drawable.baby, R.drawable.baby1};
@@ -205,9 +216,55 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
-        disease_rl = findViewById(R.id.cards_rl);
+//        disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
         search_et = findViewById(R.id.searchet);
+    }
+
+    /**
+     * RecyclerView item decoration - give equal margin around grid item
+     */
+    public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
+
+        private int spanCount;
+        private int spacing;
+        private boolean includeEdge;
+
+        public GridSpacingItemDecoration(int spanCount, int spacing, boolean includeEdge) {
+            this.spanCount = spanCount;
+            this.spacing = spacing;
+            this.includeEdge = includeEdge;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int position = parent.getChildAdapterPosition(view); // item position
+            int column = position % spanCount; // item column
+
+            if (includeEdge) {
+                outRect.left = spacing - column * spacing / spanCount; // spacing - column * ((1f / spanCount) * spacing)
+                outRect.right = (column + 1) * spacing / spanCount; // (column + 1) * ((1f / spanCount) * spacing)
+
+                if (position < spanCount) { // top edge
+                    outRect.top = spacing;
+                }
+                outRect.bottom = spacing; // item bottom
+            } else {
+                outRect.left = column * spacing / spanCount; // column * ((1f / spanCount) * spacing)
+                outRect.right = spacing - (column + 1) * spacing / spanCount; // spacing - (column + 1) * ((1f /    spanCount) * spacing)
+                if (position >= spanCount) {
+                    outRect.top = spacing; // item top
+                }
+            }
+        }
+    }
+
+    /**
+     * Converting dp to pixel
+     */
+    private int dpToPx(int dp) {
+        Resources r = getResources();
+        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
 
     private void fetchDataFromServer() {
@@ -285,7 +342,10 @@ public class MainActivity extends AppCompatActivity {
         for(int i=0;i<disease_names.size();i++){
             //Toast.makeText(mContext, "searched for "+disease_names.get(i), Toast.LENGTH_SHORT).show();
             if(input_text.contains(disease_names.get(i).toLowerCase())) {
-                disease_cv[i].performClick();
+                Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+                intent.putExtra("disease",disease_names.get(i));
+                intent.putExtra("id", disease_IDs[i]);
+                startActivity(intent);
                 return;
             }
         }
@@ -293,63 +353,87 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void placeCards(int num_diseases) {
-        RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
-        disease_cv = new CardView[num_diseases];
+//        RelativeLayout.LayoutParams relParams[] = new RelativeLayout.LayoutParams[num_diseases];
+//        disease_cv = new CardView[num_diseases];
+//
+//        for(int i=0; i<num_diseases; i++) {
+//            disease_cv[i] = new CardView(mContext);
+//            disease_cv[i].setCardBackgroundColor(Color.parseColor("#FDFDFD"));
+//            disease_cv[i].setCardElevation(4);
+//            disease_cv[i].setId(i+1);
+//            disease_cv[i].setRadius(10);
+//
+//
+//            relParams[i] = new RelativeLayout.LayoutParams(500, 500);
+//            relParams[i].setMargins(10, 10, 10, 10);
+//            if(i%2 == 1) {
+//                relParams[i].addRule(RelativeLayout.RIGHT_OF, disease_cv[i-1].getId());
+//                if(i != 1) {
+//                    relParams[i].addRule(RelativeLayout.BELOW, disease_cv[i-2].getId());
+//                }
+//            }
+//            else if(i%2 == 0 && i != 0) {
+//                relParams[i].addRule(RelativeLayout.BELOW, disease_cv[i-2].getId());
+//            }
+//
+//
+//            //            Put ImageView on CardView
+//            ImageView iv = new ImageView(mContext);
+//            iv.setId(i + 10000);
+//            iv.setImageResource(R.mipmap.ic_launcher);  // TODO: From API
+//            RelativeLayout.LayoutParams ivparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//            ivparams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+//            ivparams.setMargins(150,150,100,100);
+//            iv.setLayoutParams(ivparams);
+//
+//
+//            //            Put the TextView in CardView
+//            TextView tv = new TextView(mContext);
+//            RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+//            tvparams.addRule(RelativeLayout.BELOW, iv.getId());
+//            tv.setText(disease_names.get(i));
+//            tvparams.setMargins(150,350,100,100); // TODO: NEED TO CHANGE... SHOULD BE BELOW IMAGEVIEW
+//            //tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
+//            tv.setTextColor(Color.BLACK);
+//            tv.setLayoutParams(tvparams);
+//
+//
+//            // Finally, add the CardView in root layout
+//            disease_cv[i].addView(iv, ivparams);
+//            disease_cv[i].addView(tv, tvparams);
+//            disease_rl.addView(disease_cv[i], relParams[i]);
+//        }
+        recyclerView = findViewById(R.id.recycler_view);
+
+        diseaseList = new ArrayList<>();
+
         int it_images = 0;
-
         for(int i=0; i<num_diseases; i++) {
-            disease_cv[i] = new CardView(mContext);
-            disease_cv[i].setCardBackgroundColor(Color.parseColor("#FDFDFD"));
-            disease_cv[i].setCardElevation(4);
-            disease_cv[i].setId(i+1);
-            disease_cv[i].setRadius(10);
-
-
-            relParams[i] = new RelativeLayout.LayoutParams(500, 500);
-            relParams[i].setMargins(10, 10, 10, 10);
-            if(i%2 == 1) {
-                relParams[i].addRule(RelativeLayout.RIGHT_OF, disease_cv[i-1].getId());
-                if(i != 1) {
-                    relParams[i].addRule(RelativeLayout.BELOW, disease_cv[i-2].getId());
-                }
-            }
-            else if(i%2 == 0 && i != 0) {
-                relParams[i].addRule(RelativeLayout.BELOW, disease_cv[i-2].getId());
-            }
-
-
-            //            Put ImageView on CardView
-            ImageView iv = new ImageView(mContext);
-            iv.setId(i + 10000);
-            if(it_images > 3) {
+            if(i>3)
                 it_images = 0;
-            }
-            else {
+            else
                 it_images++;
-            }
-            iv.setImageResource(myImageList[it_images]);  // TODO: From API
-            RelativeLayout.LayoutParams ivparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            ivparams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
-            ivparams.setMargins(150,150,100,100);
-            iv.setLayoutParams(ivparams);
-
-
-            //            Put the TextView in CardView
-            TextView tv = new TextView(mContext);
-            RelativeLayout.LayoutParams tvparams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            tvparams.addRule(RelativeLayout.BELOW, iv.getId());
-            tv.setText(disease_names.get(i));
-            tvparams.setMargins(150,350,100,100); // TODO: NEED TO CHANGE... SHOULD BE BELOW IMAGEVIEW
-            //tv.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 30);
-            tv.setTextColor(Color.BLACK);
-            tv.setLayoutParams(tvparams);
-
-
-            // Finally, add the CardView in root layout
-            disease_cv[i].addView(iv, ivparams);
-            disease_cv[i].addView(tv, tvparams);
-            disease_rl.addView(disease_cv[i], relParams[i]);
+            Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
+            diseaseList.add(ds);
         }
+        adapter = new DiseaseAdapter(this, diseaseList);
+
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        adapter.setClickListener(this);
+        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        Toast.makeText(this, "clicked1", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+        intent.putExtra("disease",disease_names.get(position));
+        intent.putExtra("id", disease_IDs[position]);
+        startActivity(intent);
     }
 
 
@@ -403,18 +487,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        for(int i=0; i<num_diseases; i++) {
-            final int index = i;
-            disease_cv[i].setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
-                    intent.putExtra("disease",disease_names.get(index));
-                    intent.putExtra("id", disease_IDs[index]);
-                    startActivity(intent);
-                }
-            });
-        }
+//        for(int i=0; i<num_diseases; i++) {
+//            final int index = i;
+//            disease_cv[i].setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
+//                    intent.putExtra("disease",disease_names.get(index));
+//                    intent.putExtra("id", disease_IDs[index]);
+//                    startActivity(intent);
+//                }
+//            });
+//        }
 
         search_et.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
