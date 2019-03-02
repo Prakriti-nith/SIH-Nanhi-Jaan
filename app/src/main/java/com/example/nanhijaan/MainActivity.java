@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
-    String language, languageStr, contactStr, parentStr, titleStr;
+    String language, languageStr, contactStr, parentStr, titleStr, mapStr;
     EditText search_et;
     JSONObject object;
-    MenuItem languageItem, contactItem, parentItem;
+    MenuItem languageItem, contactItem, parentItem, mapItem;
     Menu menu;
     private RecyclerView recyclerView;
     private DiseaseAdapter adapter;
@@ -175,6 +175,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             parentStr = getString(R.string.eng_suggestions);
             contactStr = getString(R.string.eng_contact);
             languageStr = getString(R.string.eng_language);
+            mapStr = "Nearby Hospitals";
         }
        else if(language.equals("bengali")) {
             parentStr = getString(R.string.bengali_suggestions);
@@ -521,6 +522,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         parentItem = menu.findItem(R.id.action_parent);
         contactItem = menu.findItem(R.id.action_contact);
         languageItem = menu.findItem(R.id.action_language);
+        mapItem = menu.findItem(R.id.action_map);
         setMenuLanguages();
         return true;
     }
@@ -543,6 +545,10 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         }
         else if(id == R.id.action_contact) {
             Intent i = new Intent(MainActivity.this, ContactUsActivity.class);
+            startActivity(i);
+        }
+        else if(id == R.id.action_map) {
+            Intent i = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(i);
         }
 

@@ -17,4 +17,9 @@
         android:orderInCategory="100"
         android:title="Contact us"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_map"
+        android:orderInCategory="100"
+        android:title="Nearby Hospitals"
+        app:showAsAction="never" />
 </menu>
