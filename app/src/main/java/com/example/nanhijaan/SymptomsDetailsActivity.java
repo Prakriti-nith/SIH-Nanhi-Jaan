@@ -2,6 +2,7 @@ package com.example.nanhijaan;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -16,7 +17,7 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
     String heading, content[], details = "";
     TextView heading_tv, content_tv;
     Menu menu;
-    String language;
+    String language, diseaseStr;
     String languageStr, contactStr, parentStr;
     MenuItem languageItem, contactItem, parentItem;
     FloatingActionButton fab;
@@ -35,6 +36,7 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
         heading_tv.setText(heading);
         int length = mIntent.getIntExtra("length", 0);
         content = mIntent.getStringArrayExtra("content");
+        diseaseStr = mIntent.getStringExtra("disease");
 
         for(int i=0; i<length; i++) {
             details = details + content[i] + "\n";
@@ -51,6 +53,8 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
                 tts.say(smf.toString());
             }
         });
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(diseaseStr);
     }
 
     private void getLanguage() {
