@@ -178,7 +178,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/arrowiv"
-                    android:text="ਪੰਜਾਬੀ"
+                    android:text="বাঙালি"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -216,7 +216,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/arrowiv"
-                    android:text="ਪੰਜਾਬੀ"
+                    android:text="தமிழ்"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -254,7 +254,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/arrowiv"
-                    android:text="ਪੰਜਾਬੀ"
+                    android:text="తెలుగు"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
