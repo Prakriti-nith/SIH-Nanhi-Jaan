@@ -1,13 +1,13 @@
 package com.example.nanhijaan;
 
 import android.annotation.TargetApi;
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.Toolbar;
@@ -59,16 +59,9 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
         Intent mIntent = getIntent();
         disease_id = mIntent.getIntExtra("id", 1);
         diseaseStr = mIntent.getStringExtra("disease");
-        //actionBarSetup();
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(diseaseStr);
         fetchDataFromServer();
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    private void actionBarSetup() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            ActionBar ab = getActionBar();
-            ab.setTitle(diseaseStr);
-        }
     }
 
     private void setMenuLanguages() {
@@ -286,6 +279,7 @@ public class DiseaseDetailsActivity extends AppCompatActivity {
                     heading = mentalStr;
                 }
 
+                i.putExtra("disease", diseaseStr);
                 i.putExtra("heading", heading);
                 startActivity(i);
             }

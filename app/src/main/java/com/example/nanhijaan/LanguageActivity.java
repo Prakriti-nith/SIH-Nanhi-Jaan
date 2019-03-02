@@ -3,6 +3,7 @@ package com.example.nanhijaan;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -14,7 +15,7 @@ public class LanguageActivity extends AppCompatActivity {
 
     CardView eng_cv, hindi_cv, punjabi_cv;
     TextView choose_tv;
-    String language;
+    String language, titleStr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,9 @@ public class LanguageActivity extends AppCompatActivity {
         getLanguage();
         setTextViewLanguages();
         add_listeners();
+
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(titleStr);
     }
 
     private void setTextViewLanguages() {
@@ -46,6 +50,12 @@ public class LanguageActivity extends AppCompatActivity {
 
     private void getLanguage() {
         language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, LanguageActivity.this);
+        if(language.equals("english"))
+            titleStr = getString(R.string.eng_nanhijaan);
+        else if(language.equals("hindi"))
+            titleStr = getString(R.string.hindi_nanhijaan);
+        else if(language.equals("punjabi"))
+            titleStr = getString(R.string.punjabi_nanhijaan);
         Log.d("1234", "getLanguage: " + language);
     }
 

@@ -15,6 +15,7 @@ import android.speech.tts.TextToSpeech;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
     Vector<String> disease_names;
     CardView disease_cv[];
     ImageButton search_ib;
-    String language, languageStr, contactStr, parentStr;
+    String language, languageStr, contactStr, parentStr, titleStr;
     EditText search_et;
     JSONObject object;
     MenuItem languageItem, contactItem, parentItem;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         myImageList = new int[]{R.drawable.ic_hearing_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp};
         init();
         getLanguage();
+        myImageList = new int[]{R.drawable.fetus, R.drawable.pregnant, R.drawable.baby, R.drawable.baby1};
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
@@ -153,6 +155,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         });
 
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        ab.setTitle(titleStr);
     }
 
     private void setMenuLanguages() {
@@ -178,6 +182,12 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
     private void getLanguage() {
         language = SetLanguage.getDefaults(SetLanguage.LANGUAGE, MainActivity.this);
+        if(language.equals("english"))
+            titleStr = getString(R.string.eng_nanhijaan);
+        else if(language.equals("hindi"))
+            titleStr = getString(R.string.hindi_nanhijaan);
+        else if(language.equals("punjabi"))
+            titleStr = getString(R.string.punjabi_nanhijaan);
         Log.d("1234", "getLanguage: " + language);
     }
 
