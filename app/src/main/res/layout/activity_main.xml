@@ -74,24 +74,14 @@
         </android.support.v7.widget.CardView>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/appbar"
-        android:background="#FCF7F7">
-
-        <RelativeLayout
-            android:id="@+id/cards_rl"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-
-        </RelativeLayout>
-
-    </android.support.v4.widget.NestedScrollView>
+        android:clipToPadding="false"
+        android:scrollbars="vertical"
+        android:padding="10dp"/>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
@@ -101,7 +91,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        app:srcCompat="@drawable/ic_hearing_black_24dp" />
+        android:src="@drawable/ic_hearing_black_24dp" />
 
 </RelativeLayout>
 
