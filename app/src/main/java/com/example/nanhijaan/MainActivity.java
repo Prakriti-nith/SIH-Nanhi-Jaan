@@ -180,12 +180,14 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             parentStr = getString(R.string.hindi_suggestions);
             contactStr = getString(R.string.hindi_contact);
             languageStr = getString(R.string.hindi_language);
+            mapStr = "आसपास के अस्पताल";
 
         }
         else if(language.equals("punjabi")) {
             parentStr = getString(R.string.punjabi_suggestions);
             contactStr = getString(R.string.punjabi_contact);
             languageStr = getString(R.string.punjabi_language);
+            mapStr = "ਨੇੜਲੇ ਹਸਪਤਾਲਾਂ";
         }
         else if(language.equals("english")) {
             parentStr = getString(R.string.eng_suggestions);
@@ -197,20 +199,24 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             parentStr = getString(R.string.bengali_suggestions);
             contactStr = getString(R.string.bengali_contact);
             languageStr = getString(R.string.bengali_language);
+            mapStr = "কাছাকাছি হাসপাতাল";
         }
         else if(language.equals("tamil")) {
             parentStr = getString(R.string.tamil_suggestions);
             contactStr = getString(R.string.tamil_contact);
             languageStr = getString(R.string.tamil_language);
+            mapStr = "அருகிலுள்ள மருத்துவமனைகள்";
         }
         else if(language.equals("telugu")) {
             parentStr = getString(R.string.telugu_suggestions);
             contactStr = getString(R.string.telugu_contact);
             languageStr = getString(R.string.telugu_language);
+            mapStr = "సమీపంలోని ఆసుపత్రులు";
         }
         languageItem.setTitle(languageStr);
         contactItem.setTitle(contactStr);
         parentItem.setTitle(parentStr);
+        mapItem.setTitle(mapStr);
     }
 
     private void getLanguage() {
@@ -429,7 +435,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         for(int i=0; i<num_diseases; i++) {
             Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
             diseaseList.add(ds);
-            if(it_images>3)
+            if(it_images>=3)
                 it_images = 0;
             else
                 it_images++;
