@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
     private Context mContext;
     Toolbar toolbar;
-    FloatingActionButton fab;
+    FloatingActionButton fab, chat_fab;
     RelativeLayout disease_rl;
     int num_diseases, disease_IDs[];
     Vector<String> disease_names;
@@ -88,7 +88,6 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
 
-        myImageList = new int[]{R.drawable.ic_hearing_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp};
         init();
         getLanguage();
         myImageList = new int[]{R.drawable.fetus, R.drawable.pregnant, R.drawable.baby, R.drawable.baby1};
@@ -219,6 +218,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 //        disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
         search_et = findViewById(R.id.searchet);
+        chat_fab = findViewById(R.id.chat_fab);
     }
 
     /**
@@ -409,12 +409,12 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
         int it_images = 0;
         for(int i=0; i<num_diseases; i++) {
-            if(i>3)
+            Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
+            diseaseList.add(ds);
+            if(it_images>3)
                 it_images = 0;
             else
                 it_images++;
-            Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
-            diseaseList.add(ds);
         }
         adapter = new DiseaseAdapter(this, diseaseList);
 
@@ -446,6 +446,14 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
                     diseases.append(dn + ". ");
                 }
                 tts.say(diseases.toString());
+            }
+        });
+
+        chat_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Bot.class);
+                startActivity(intent);
             }
         });
 
