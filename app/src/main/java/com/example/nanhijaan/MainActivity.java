@@ -300,8 +300,6 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(MainActivity.this, "Data received", Toast.LENGTH_SHORT).show();
-
                                 response= fixEncoding(response);
 
                                 parseDiseaseJSON(response);
