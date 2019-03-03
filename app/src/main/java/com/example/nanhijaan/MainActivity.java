@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         init();
         getLanguage();
         search_et.setFocusable(false);
-        myImageList = new int[]{R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
+        myImageList = new int[]{R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4, R.drawable.img5, R.drawable.img6};
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
@@ -435,7 +435,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         for(int i=0; i<num_diseases; i++) {
             Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
             diseaseList.add(ds);
-            if(it_images>=3)
+            if(it_images>=5)
+
                 it_images = 0;
             else
                 it_images++;
