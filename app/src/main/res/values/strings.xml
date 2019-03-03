@@ -26,7 +26,6 @@
     <string name="telugu_symptoms">లక్షణాలు</string>
 
 
-
     //Prevention
 
     <string name="eng_prevention">Prevention</string>
@@ -157,7 +156,6 @@
     <string name="telugu_madeby">జట్టు తయారు చేయబడింది</string>
 
 
-
     // Nanhi Jaan
     <string name="eng_nanhijaan">Nanhi Jaan</string>
     <string name="hindi_nanhijaan">नन्ही जान</string>
@@ -186,7 +184,6 @@
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
-
 
 
 </resources>
