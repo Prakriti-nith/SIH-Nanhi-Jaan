@@ -31,8 +31,8 @@ public class Emergency extends AppCompatActivity {
         doc1_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Emergency.this, NotAvailable.class);
-                startActivity(intent);
+                //Intent intent = new Intent(Emergency.this, NotAvailable.class);
+                //startActivity(intent);
             }
         });
     }

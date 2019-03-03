@@ -474,6 +474,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Bot.class);
                 startActivity(intent);
+            }
+        });
 
         emergency_fab.setOnClickListener(new View.OnClickListener() {
             @Override
