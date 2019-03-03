@@ -95,10 +95,25 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
-        
+
+        String lang = SetLanguage.getDefaults(SetLanguage.LANGUAGE, mContext), l = "en";
+        if (lang == "hindi") {
+            l = "hi";
+        } else if (lang == "english") {
+            l = "en";
+        } else if (lang == "punjabi") {
+            l = "pu";
+        } else if (lang == "bengali") {
+            l = "bn";
+        } else if (lang == "tamil") {
+            l = "ta";
+        } else if (lang == "telugu") {
+            l = "te";
+        }
+
         mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
                 RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+        mSpeechRecognizerIntent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, new Locale(l));
 
         mSpeechRecognizer.setRecognitionListener(new RecognitionListener() {
             @Override
@@ -410,12 +425,12 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
         int it_images = 0;
         for(int i=0; i<num_diseases; i++) {
-            if(i>3)
+            Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
+            diseaseList.add(ds);
+            if(it_images>3)
                 it_images = 0;
             else
                 it_images++;
-            Disease ds = new Disease(disease_names.get(i), myImageList[it_images]);
-            diseaseList.add(ds);
         }
         adapter = new DiseaseAdapter(this, diseaseList);
 
@@ -430,7 +445,6 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
     @Override
     public void onItemClick(View view, int position) {
-        Toast.makeText(this, "clicked1", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(MainActivity.this, DiseaseDetailsActivity.class);
         intent.putExtra("disease",disease_names.get(position));
         intent.putExtra("id", disease_IDs[position]);

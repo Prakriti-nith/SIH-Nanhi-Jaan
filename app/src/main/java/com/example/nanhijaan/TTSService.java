@@ -26,6 +26,12 @@ public class TTSService implements TextToSpeech.OnInitListener {
                 language = "en";
             } else if (language == "punjabi") {
                 language = "pu";
+            } else if (language == "bengali") {
+                language = "bn";
+            } else if (language == "tamil") {
+                language = "ta";
+            } else if (language == "telugu") {
+                language = "te";
             }
             tts.setLanguage(new Locale(language));
             //tts.setLanguage(Locale.getDefault());
