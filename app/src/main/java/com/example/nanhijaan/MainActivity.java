@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
     private Context mContext;
     Toolbar toolbar;
-    FloatingActionButton fab;
+    FloatingActionButton fab, emergency_fab;
     RelativeLayout disease_rl;
     int num_diseases, disease_IDs[];
     Vector<String> disease_names;
@@ -91,7 +91,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         myImageList = new int[]{R.drawable.ic_hearing_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp};
         init();
         getLanguage();
-        myImageList = new int[]{R.drawable.fetus, R.drawable.pregnant, R.drawable.baby, R.drawable.baby1};
+        search_et.setFocusable(false);
+        myImageList = new int[]{R.drawable.aids, R.drawable.pregnant, R.drawable.baby, R.drawable.aids};
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
@@ -232,9 +233,12 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
     private void init() {
         toolbar = findViewById(R.id.toolbar);
         fab = findViewById(R.id.fab);
+        emergency_fab = findViewById(R.id.emergency_fab);
 //        disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
         search_et = findViewById(R.id.searchet);
+        search_et.setBackgroundColor(Color.parseColor("#ffffff"));
+
     }
 
     /**
@@ -464,6 +468,15 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             }
         });
 
+        emergency_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Emergency.class);
+                startActivity(intent);
+
+            }
+        });
+
 
         search_ib.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -523,6 +536,15 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
                     return true;
                 }
+                return false;
+            }
+        });
+
+        search_et.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                search_et.setFocusableInTouchMode(true);
+                search_et.clearFocus();
                 return false;
             }
         });
