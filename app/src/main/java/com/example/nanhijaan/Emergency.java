@@ -32,37 +32,44 @@ public class Emergency extends AppCompatActivity {
         doc1_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
             }
         });
         doc2_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
             }
         });
         doc3_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
             }
         });
         doc4_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
             }
         });
         doc5_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
               
             }
         });
         doc6_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-      
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+                startActivity(intent);
             }
         });
     }

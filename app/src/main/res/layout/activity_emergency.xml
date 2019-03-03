@@ -53,7 +53,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="4dp"
-                    android:src="@drawable/red"
+                    android:src="@drawable/green"
 
                     />
                 <TextView
@@ -64,7 +64,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/doc1iv"
-                    android:text="doctor 1"
+                    android:text="Dr. Prakriti"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -103,7 +103,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/dotiv2"
-                    android:text="Doctor 2"
+                    android:text="Dr. Anishka"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -133,7 +133,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="4dp"
-                    android:src="@drawable/red"/>
+                    android:src="@drawable/green"/>
                 <TextView
                     android:id="@+id/doc3tv"
                     android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/dotiv3"
-                    android:text="doctor 3"
+                    android:text="Dr. Vishal"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -180,7 +180,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/dotiv4"
-                    android:text="doctor 4"
+                    android:text="Dr. Umesh"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -209,7 +209,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="4dp"
-                    android:src="@drawable/red"/>
+                    android:src="@drawable/green"/>
                 <TextView
                     android:id="@+id/doc5tv"
                     android:layout_width="match_parent"
@@ -218,7 +218,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/dotiv5"
-                    android:text="doctor 5"
+                    android:text=" Dr. Sunidhi"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
@@ -247,7 +247,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
                     android:layout_marginRight="4dp"
-                    android:src="@drawable/red"/>
+                    android:src="@drawable/green"/>
                 <TextView
                     android:id="@+id/doc6tv"
                     android:layout_width="match_parent"
@@ -256,7 +256,7 @@
                     android:layout_marginLeft="8dp"
                     android:layout_marginRight="8dp"
                     android:layout_toLeftOf="@id/arrowiv"
-                    android:text="doctor6"
+                    android:text="Dr. Divyansh"
                     android:paddingLeft="15dp"/>
             </RelativeLayout>
         </android.support.v7.widget.CardView>
