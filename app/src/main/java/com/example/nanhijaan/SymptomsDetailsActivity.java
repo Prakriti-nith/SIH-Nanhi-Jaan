@@ -143,6 +143,10 @@ public class SymptomsDetailsActivity extends AppCompatActivity {
             Intent i = new Intent(SymptomsDetailsActivity.this, ContactUsActivity.class);
             startActivity(i);
         }
+        else if(id == R.id.action_map) {
+            Intent i = new Intent(SymptomsDetailsActivity.this, MapsActivity.class);
+            startActivity(i);
+        }
 
         return super.onOptionsItemSelected(item);
     }
