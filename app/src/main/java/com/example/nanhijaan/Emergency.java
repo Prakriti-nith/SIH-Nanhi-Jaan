@@ -1,6 +1,7 @@
 package com.example.nanhijaan;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -31,8 +32,38 @@ public class Emergency extends AppCompatActivity {
         doc1_cv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Emergency.this, NotAvailable.class);
+               Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+ "7018352301"));
+            }
+        });
+        doc2_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
+            }
+        });
+        doc3_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
                 startActivity(intent);
+            }
+        });
+        doc4_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
+            }
+        });
+        doc5_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
+            }
+        });
+        doc6_cv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_CALL, Uri.parse("tel:"+ "7018352301"));
             }
         });
     }
