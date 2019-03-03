@@ -59,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 
     private Context mContext;
     Toolbar toolbar;
-    FloatingActionButton fab, emergency_fab;
+
+    FloatingActionButton fab, chat_fab, emergency_fab;
     RelativeLayout disease_rl;
     int num_diseases, disease_IDs[];
     Vector<String> disease_names;
@@ -88,7 +89,6 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         setContentView(R.layout.activity_main);
         mContext = getApplicationContext();
 
-        myImageList = new int[]{R.drawable.ic_hearing_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp, R.drawable.ic_search_black_24dp, R.drawable.ic_keyboard_arrow_right_black_24dp};
         init();
         getLanguage();
         search_et.setFocusable(false);
@@ -237,8 +237,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
 //        disease_rl = findViewById(R.id.cards_rl);
         search_ib = findViewById(R.id.searchib);
         search_et = findViewById(R.id.searchet);
+        chat_fab = findViewById(R.id.chat_fab);
         search_et.setBackgroundColor(Color.parseColor("#ffffff"));
-
     }
 
     /**
@@ -468,12 +468,18 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             }
         });
 
+
+        chat_fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Bot.class);
+                startActivity(intent);
+
         emergency_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, Emergency.class);
                 startActivity(intent);
-
             }
         });
 

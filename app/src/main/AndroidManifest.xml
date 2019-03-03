@@ -38,10 +38,12 @@
         <activity
             android:name=".MapsActivity"
             android:label="@string/title_activity_maps"></activity>
+
         <activity android:name=".ContactUsActivity" />
         <activity android:name=".LanguageActivity" />
         <activity android:name=".ParentSuggestions" />
         <activity android:name=".SymptomsDetailsActivity" />
+        <activity android:name=".Bot" />
         <activity android:name=".Emergency" />
         <activity
             android:name=".WelcomeActivity"
