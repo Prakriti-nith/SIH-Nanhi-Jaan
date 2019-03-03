@@ -95,10 +95,6 @@ public class Bot extends AppCompatActivity {
 
     private void fetchDataFromServer(String query) {
 
-        final ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setMessage("Loading...");
-        dialog.show();
-
         RequestQueue queue = Volley.newRequestQueue(this);
 
         final StringRequest request =
@@ -106,7 +102,6 @@ public class Bot extends AppCompatActivity {
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
-                                Toast.makeText(Bot.this, "Data received", Toast.LENGTH_SHORT).show();
 
                                 try {
                                     object = new JSONObject(response);
@@ -118,7 +113,6 @@ public class Bot extends AppCompatActivity {
                                 catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                dialog.cancel();
                             }
 
                             private String fixEncoding(String response) {
@@ -136,7 +130,6 @@ public class Bot extends AppCompatActivity {
                         new Response.ErrorListener() {
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                dialog.cancel();
                                 Log.d("1234", "onErrorResponse: " + error);
                                 Toast.makeText(Bot.this, "Check your internet connection", Toast.LENGTH_SHORT).show();
                             }

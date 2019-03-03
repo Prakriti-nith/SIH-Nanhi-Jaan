@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         init();
         getLanguage();
         search_et.setFocusable(false);
-        myImageList = new int[]{R.drawable.aids, R.drawable.pregnant, R.drawable.baby, R.drawable.aids};
+        myImageList = new int[]{R.drawable.img1, R.drawable.img2, R.drawable.img3, R.drawable.img4};
         fetchDataFromServer();
 
         tts = new TTSService(mContext);
