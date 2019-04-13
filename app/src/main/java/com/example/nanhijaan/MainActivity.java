@@ -51,6 +51,7 @@ import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -69,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
     String language, languageStr, contactStr, parentStr, titleStr, mapStr;
     EditText search_et;
     JSONObject object;
-    MenuItem languageItem, contactItem, parentItem, mapItem;
+    MenuItem languageItem, contactItem, parentItem, mapItem, reminderItem;
     Menu menu;
     private RecyclerView recyclerView;
     private DiseaseAdapter adapter;
@@ -98,17 +99,17 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         tts = new TTSService(mContext);
 
         String lang = SetLanguage.getDefaults(SetLanguage.LANGUAGE, mContext), l = "en";
-        if (lang == "hindi") {
+        if (lang.equals("hindi")) {
             l = "hi";
-        } else if (lang == "english") {
+        } else if (lang.equals("english")) {
             l = "en";
-        } else if (lang == "punjabi") {
+        } else if (lang.equals("punjabi")) {
             l = "pu";
-        } else if (lang == "bengali") {
+        } else if (lang.equals("bengali")) {
             l = "bn";
-        } else if (lang == "tamil") {
+        } else if (lang.equals("tamil")) {
             l = "ta";
-        } else if (lang == "telugu") {
+        } else if (lang.equals("telugu")) {
             l = "te";
         }
 
@@ -572,6 +573,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         contactItem = menu.findItem(R.id.action_contact);
         languageItem = menu.findItem(R.id.action_language);
         mapItem = menu.findItem(R.id.action_map);
+        reminderItem = menu.findItem(R.id.action_reminder);
         setMenuLanguages();
         return true;
     }
@@ -599,6 +601,17 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         else if(id == R.id.action_map) {
             Intent i = new Intent(MainActivity.this, MapsActivity.class);
             startActivity(i);
+        }
+        else if(id == R.id.action_reminder) {
+            Calendar cal = Calendar.getInstance();
+            Intent intent = new Intent(Intent.ACTION_EDIT);
+            intent.setType("vnd.android.cursor.item/event");
+            intent.putExtra("beginTime", cal.getTimeInMillis());
+            intent.putExtra("allDay", true);
+            intent.putExtra("rrule", "FREQ=YEARLY");
+            intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
+            intent.putExtra("title", "Title");
+            startActivity(intent);
         }
 
 
