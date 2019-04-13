@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
 import android.speech.SpeechRecognizer;
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
     String language, languageStr, contactStr, parentStr, titleStr, mapStr;
     EditText search_et;
     JSONObject object;
-    MenuItem languageItem, contactItem, parentItem, mapItem, reminderItem;
+    MenuItem languageItem, contactItem, parentItem, mapItem, reminderItem, pillItem, historyItem;
     Menu menu;
     private RecyclerView recyclerView;
     private DiseaseAdapter adapter;
@@ -574,6 +575,8 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
         languageItem = menu.findItem(R.id.action_language);
         mapItem = menu.findItem(R.id.action_map);
         reminderItem = menu.findItem(R.id.action_reminder);
+        pillItem = menu.findItem(R.id.action_pills);
+        historyItem = menu.findItem(R.id.action_history);
         setMenuLanguages();
         return true;
     }
@@ -612,6 +615,23 @@ public class MainActivity extends AppCompatActivity implements DiseaseAdapter.It
             intent.putExtra("endTime", cal.getTimeInMillis()+60*60*1000);
             intent.putExtra("title", "Title");
             startActivity(intent);
+        }
+        else if(id == R.id.action_pills) {
+            // Create a Uri from an intent string. Use the result to create an Intent.
+            Uri gmmIntentUri = Uri.parse("geo:0,0?q=pharmacy");
+
+// Create an Intent from gmmIntentUri. Set the action to ACTION_VIEW
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+// Make the Intent explicit by setting the Google Maps package
+            mapIntent.setPackage("com.google.android.apps.maps");
+
+// Attempt to start an activity that can handle the Intent
+            startActivity(mapIntent);
+
+        }
+        else if(id == R.id.action_history) {
+            Intent i = new Intent(MainActivity.this, HistoryActivity.class);
+            startActivity(i);
         }
 
 

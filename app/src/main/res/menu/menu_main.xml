@@ -13,9 +13,19 @@
         android:title="Nearby Hospitals"
         app:showAsAction="never" />
     <item
+        android:id="@+id/action_pills"
+        android:orderInCategory="100"
+        android:title="Order Pills"
+        app:showAsAction="never" />
+    <item
         android:id="@+id/action_reminder"
         android:orderInCategory="100"
         android:title="Set Reminder"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_history"
+        android:orderInCategory="100"
+        android:title="Health History"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_parent"
